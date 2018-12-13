@@ -1,0 +1,44 @@
+{
+  "name": "node-grpc-typescript",
+  "version": "0.1.0",
+  "description": "Node.js gRPC Structure for TypeScript Example",
+  "main": "dist/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "tslint --project tsconfig.json ./src/**/*.ts",
+    "build": "npm run build:proto && rimraf dist && tsc",
+    "build:proto": "node bin/build",
+    "prestart": "npm run lint && npm run build",
+    "start": "node dist/server",
+    "client": "node dist/client"
+  },
+  "dependencies": {
+    "grpc": "^1.16.1"
+  },
+  "devDependencies": {
+    "@types/google-protobuf": "^3.2.7",
+    "@types/node": "^10.12.14",
+    "dtslint": "^0.4.1",
+    "grpc-tools": "^1.6.6",
+    "grpc_tools_node_protoc_ts": "^2.4.1",
+    "protobufjs": "^6.8.8",
+    "rimraf": "^2.6.2",
+    "shelljs": "^0.8.3",
+    "tslint": "^5.11.0",
+    "tslint-microsoft-contrib": "^6.0.0",
+    "typescript": "^3.2.2",
+    "typescript-tslint-plugin": "^0.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CatsMiaow/node-grpc-typescript.git"
+  },
+  "keywords": [
+    "Node.js",
+    "gRPC",
+    "TypeScript"
+  ],
+  "homepage": "https://tested.kr",
+  "author": "infiltrator@naver.com",
+  "license": "MIT"
+}

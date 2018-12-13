@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {},
+    "target": "es2017",
+    "outDir": "dist",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "declaration": true,
+    "strict": true, // noImplicitAny, noImplicitThis, alwaysStrict, strictNullChecks, strictFunctionTypes
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noFallthroughCasesInSwitch": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "inlineSources": true,
+    "forceConsistentCasingInFileNames": true,
+    // "noUnusedParameters": true,
+    // "suppressImplicitAnyIndexErrors": true,
+    // "experimentalDecorators": true,
+    // "emitDecoratorMetadata": true,
+    "plugins": [
+      { "name": "typescript-tslint-plugin" }
+    ]
+  },
+  "include": [
+    "src/**/*",
+    "./typings/index.d.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

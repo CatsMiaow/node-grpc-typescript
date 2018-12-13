@@ -1,0 +1,45 @@
+{
+  "extends": "tslint-microsoft-contrib",
+  "linterOptions": {
+    "exclude": ["node_modules/**"]
+  },
+  "rules": {
+    "no-http-string": false,
+
+    // constructor(private client: Client) {}
+    "no-parameter-properties": false,
+
+    // https://github.com/palantir/tslint/issues/1544
+    "no-invalid-this": false,
+
+    // https://github.com/Microsoft/tslint-microsoft-contrib/issues/168
+    "no-relative-imports": false,
+
+    // https://github.com/Microsoft/tslint-microsoft-contrib/issues/123
+    "no-backbone-get-set-outside-model": false,
+
+    // import 'moment/locale/ko'
+    "no-import-side-effect": false,
+
+    // template strings
+    "no-multiline-string": false,
+
+    // text().trim().replace() ...
+    "newline-per-chained-call": false,
+
+    // Request: if you expect binary data, you should set encoding: null
+    "no-null-keyword": false,
+
+    // !, &&, || 연산자 Only boolean
+    "strict-boolean-expressions": false,
+
+    // node_modules .d.ts any return
+    "no-unsafe-any": false,
+
+    // node_modules .then() return
+    "await-promise": false,
+
+    // () => logger.error())
+    "no-void-expression": [true, "ignore-arrow-function-shorthand"]
+  }
+}
