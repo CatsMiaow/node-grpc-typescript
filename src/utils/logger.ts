@@ -3,10 +3,10 @@ import { dirname } from 'path';
 // tslint:disable-next-line: no-any
 export type Parameter = [any?, ...any[]];
 
-/* tslint:disable:no-console */
 /**
- * 로그 클래스
+ * Logger Class
  */
+/* tslint:disable:no-console */
 export class Logger {
   private readonly rootDir: string = dirname((<NodeModule>require.main).filename);
 

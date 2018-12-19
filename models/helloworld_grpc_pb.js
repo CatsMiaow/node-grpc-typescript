@@ -1,5 +1,7 @@
 // GENERATED CODE -- DO NOT EDIT!
 
+// Original file comments:
+// https://developers.google.com/protocol-buffers/docs/proto3?hl=ko#json
 'use strict';
 var grpc = require('grpc');
 var helloworld_pb = require('./helloworld_pb.js');

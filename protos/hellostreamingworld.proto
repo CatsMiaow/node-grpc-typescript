@@ -1,3 +1,4 @@
+// https://developers.google.com/protocol-buffers/docs/proto3?hl=ko#json
 syntax = "proto3";
 
 package hellostreamingworld;
@@ -5,7 +6,7 @@ package hellostreamingworld;
 // The greeting service definition.
 service MultiGreeter {
   // Sends multiple greetings
-  rpc sayHello (HelloRequest) returns (stream HelloReply) {}
+  rpc sayHello (HelloRequest) returns (stream HelloReply);
 }
 
 // The request message containing the user's name and how many greetings
