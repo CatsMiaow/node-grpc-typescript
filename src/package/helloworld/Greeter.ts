@@ -1,7 +1,9 @@
-import { sendUnaryData, ServerUnaryCall, status } from 'grpc';
+import { randomBytes } from 'crypto';
+import { sendUnaryData, ServerDuplexStream, ServerReadableStream, ServerUnaryCall, ServerWriteableStream, status } from 'grpc';
+
 import { IGreeterServer } from '../../../models/helloworld_grpc_pb';
-import { HelloReply, HelloRequest } from '../../../models/helloworld_pb';
-import { ServiceError } from '../../utils';
+import { HelloRequest, HelloResponse } from '../../../models/helloworld_pb';
+import { logger, ServiceError } from '../../utils';
 
 /**
  * package helloworld
@@ -11,8 +13,10 @@ export class Greeter implements IGreeterServer {
   /**
    * Implements the SayHello RPC method.
    */
-  public sayHello(call: ServerUnaryCall<HelloRequest>, callback: sendUnaryData<HelloReply>): void {
-    const res: HelloReply = new HelloReply();
+  public sayHello(call: ServerUnaryCall<HelloRequest>, callback: sendUnaryData<HelloResponse>): void {
+    logger.info('sayHello:', call.request.toObject());
+
+    const res: HelloResponse = new HelloResponse();
     const name: string = call.request.getName();
 
     if (name === 'error') {
@@ -25,5 +29,48 @@ export class Greeter implements IGreeterServer {
     res.setMessage(`Hello ${name}`);
 
     callback(null, res);
+  }
+
+  public sayHelloStreamRequest(call: ServerReadableStream<HelloRequest>, callback: sendUnaryData<HelloResponse>): void {
+    logger.info('sayHelloStreamRequest:', call.getPeer());
+
+    const data: string[] = [];
+    call.on('data', (req: HelloRequest) => {
+      data.push(`${req.getName()} - ${randomBytes(5).toString('hex')}`);
+    }).on('end', () => {
+      const res: HelloResponse = new HelloResponse();
+      res.setMessage(data.join('\n'));
+
+      callback(null, res);
+    }).on('error', (err: Error) => {
+      callback(new ServiceError(status.INTERNAL, err.message), null);
+    });
+  }
+
+  public sayHelloStreamResponse(call: ServerWriteableStream<HelloRequest>): void {
+    logger.info('sayHelloStreamResponse:', call.request.toObject());
+
+    const name: string = call.request.getName();
+
+    for (const text of Array(10).fill('').map(() => randomBytes(5).toString('hex'))) {
+      const res: HelloResponse = new HelloResponse();
+      res.setMessage(`${name} - ${text}`);
+      call.write(res);
+    }
+    call.end();
+  }
+
+  public sayHelloStream(call: ServerDuplexStream<HelloRequest, HelloResponse>): void {
+    logger.info('sayHelloStream:', call.getPeer());
+
+    call.on('data', (req: HelloRequest) => {
+      const res: HelloResponse = new HelloResponse();
+      res.setMessage(`${req.getName()} - ${randomBytes(5).toString('hex')}`);
+      call.write(res);
+    }).on('end', () => {
+      call.end();
+    }).on('error', (err: Error) => {
+      logger.error('sayHelloStream:', err);
+    });
   }
 }

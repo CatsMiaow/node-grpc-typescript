@@ -6,17 +6,6 @@
 var grpc = require('grpc');
 var helloworld_pb = require('./helloworld_pb.js');
 
-function serialize_helloworld_HelloReply(arg) {
-  if (!(arg instanceof helloworld_pb.HelloReply)) {
-    throw new Error('Expected argument of type helloworld.HelloReply');
-  }
-  return new Buffer(arg.serializeBinary());
-}
-
-function deserialize_helloworld_HelloReply(buffer_arg) {
-  return helloworld_pb.HelloReply.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_helloworld_HelloRequest(arg) {
   if (!(arg instanceof helloworld_pb.HelloRequest)) {
     throw new Error('Expected argument of type helloworld.HelloRequest');
@@ -28,20 +17,62 @@ function deserialize_helloworld_HelloRequest(buffer_arg) {
   return helloworld_pb.HelloRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_helloworld_HelloResponse(arg) {
+  if (!(arg instanceof helloworld_pb.HelloResponse)) {
+    throw new Error('Expected argument of type helloworld.HelloResponse');
+  }
+  return new Buffer(arg.serializeBinary());
+}
 
-// The greeting service definition.
+function deserialize_helloworld_HelloResponse(buffer_arg) {
+  return helloworld_pb.HelloResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+
 var GreeterService = exports.GreeterService = {
-  // Sends a greeting
   sayHello: {
     path: '/helloworld.Greeter/sayHello',
     requestStream: false,
     responseStream: false,
     requestType: helloworld_pb.HelloRequest,
-    responseType: helloworld_pb.HelloReply,
+    responseType: helloworld_pb.HelloResponse,
     requestSerialize: serialize_helloworld_HelloRequest,
     requestDeserialize: deserialize_helloworld_HelloRequest,
-    responseSerialize: serialize_helloworld_HelloReply,
-    responseDeserialize: deserialize_helloworld_HelloReply,
+    responseSerialize: serialize_helloworld_HelloResponse,
+    responseDeserialize: deserialize_helloworld_HelloResponse,
+  },
+  sayHelloStreamRequest: {
+    path: '/helloworld.Greeter/sayHelloStreamRequest',
+    requestStream: true,
+    responseStream: false,
+    requestType: helloworld_pb.HelloRequest,
+    responseType: helloworld_pb.HelloResponse,
+    requestSerialize: serialize_helloworld_HelloRequest,
+    requestDeserialize: deserialize_helloworld_HelloRequest,
+    responseSerialize: serialize_helloworld_HelloResponse,
+    responseDeserialize: deserialize_helloworld_HelloResponse,
+  },
+  sayHelloStreamResponse: {
+    path: '/helloworld.Greeter/sayHelloStreamResponse',
+    requestStream: false,
+    responseStream: true,
+    requestType: helloworld_pb.HelloRequest,
+    responseType: helloworld_pb.HelloResponse,
+    requestSerialize: serialize_helloworld_HelloRequest,
+    requestDeserialize: deserialize_helloworld_HelloRequest,
+    responseSerialize: serialize_helloworld_HelloResponse,
+    responseDeserialize: deserialize_helloworld_HelloResponse,
+  },
+  sayHelloStream: {
+    path: '/helloworld.Greeter/sayHelloStream',
+    requestStream: true,
+    responseStream: true,
+    requestType: helloworld_pb.HelloRequest,
+    responseType: helloworld_pb.HelloResponse,
+    requestSerialize: serialize_helloworld_HelloRequest,
+    requestDeserialize: deserialize_helloworld_HelloRequest,
+    responseSerialize: serialize_helloworld_HelloResponse,
+    responseDeserialize: deserialize_helloworld_HelloResponse,
   },
 };
 

@@ -28,6 +28,8 @@ $ npm run client
 $ npm run client blahblahblah
 # Request Error
 $ npm run client error
+# Request Stream
+$ npm run client stream
 ```
 
 #### node_modules

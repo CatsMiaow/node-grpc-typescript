@@ -26,22 +26,22 @@ export namespace HelloRequest {
     }
 }
 
-export class HelloReply extends jspb.Message { 
+export class HelloResponse extends jspb.Message { 
     getMessage(): string;
     setMessage(value: string): void;
 
 
     serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): HelloReply.AsObject;
-    static toObject(includeInstance: boolean, msg: HelloReply): HelloReply.AsObject;
+    toObject(includeInstance?: boolean): HelloResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: HelloResponse): HelloResponse.AsObject;
     static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
     static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: HelloReply, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): HelloReply;
-    static deserializeBinaryFromReader(message: HelloReply, reader: jspb.BinaryReader): HelloReply;
+    static serializeBinaryToWriter(message: HelloResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): HelloResponse;
+    static deserializeBinaryFromReader(message: HelloResponse, reader: jspb.BinaryReader): HelloResponse;
 }
 
-export namespace HelloReply {
+export namespace HelloResponse {
     export type AsObject = {
         message: string,
     }
