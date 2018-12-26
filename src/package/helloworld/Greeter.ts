@@ -1,5 +1,6 @@
 import { randomBytes } from 'crypto';
-import { sendUnaryData, ServerDuplexStream, ServerReadableStream, ServerUnaryCall, ServerWriteableStream, status } from 'grpc';
+import { MetadataValue, sendUnaryData, ServerDuplexStream, ServerReadableStream, ServerUnaryCall,
+  ServerWriteableStream, status } from 'grpc';
 
 import { IGreeterServer } from '../../../models/helloworld_grpc_pb';
 import { HelloRequest, HelloResponse } from '../../../models/helloworld_pb';
@@ -14,7 +15,7 @@ export class Greeter implements IGreeterServer {
    * Implements the SayHello RPC method.
    */
   public sayHello(call: ServerUnaryCall<HelloRequest>, callback: sendUnaryData<HelloResponse>): void {
-    logger.info('sayHello:', call.request.toObject());
+    logger.info('sayHello:', call.request.toObject(), call.metadata.getMap());
 
     const res: HelloResponse = new HelloResponse();
     const name: string = call.request.getName();
@@ -26,7 +27,8 @@ export class Greeter implements IGreeterServer {
       return;
     }
 
-    res.setMessage(`Hello ${name}`);
+    const metadataValue: MetadataValue[] = call.metadata.get('foo');
+    res.setMessage(`Hello ${metadataValue.length > 0 ? metadataValue : name}`);
 
     callback(null, res);
   }

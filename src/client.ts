@@ -1,15 +1,29 @@
-import { ClientDuplexStream, ClientReadableStream, ClientWritableStream, credentials, ServiceError } from 'grpc';
+import { ClientDuplexStream, ClientReadableStream, ClientWritableStream, credentials, Metadata, ServiceError } from 'grpc';
 
 import { GreeterClient } from '../models/helloworld_grpc_pb';
 import { HelloRequest, HelloResponse } from '../models/helloworld_pb';
 import { logger } from './utils';
 
-const client: GreeterClient = new GreeterClient('localhost:50051', credentials.createInsecure());
-
 let argv: string = 'world';
 if (process.argv.length >= 3) {
   argv = process.argv[2];
 }
+
+/* // https://github.com/grpc/grpc-node/issues/543#issuecomment-427487420
+const baseCred: ChannelCredentials = credentials.createSsl();
+const authCred: CallCredentials = credentials.createFromMetadataGenerator((params: { service_url: string }, callback: MetadataCallback) => {
+  logger.info('createFromMetadataGenerator:', params);
+
+  const metadata: Metadata = new Metadata();
+  metadata.add('authorization', 'accessTokenValue');
+  callback(null, metadata);
+});
+const client: GreeterClient = new GreeterClient('localhost:50051', credentials.combineChannelCredentials(baseCred, authCred));
+*/
+const client: GreeterClient = new GreeterClient('localhost:50051', credentials.createInsecure());
+const metadata: Metadata = new Metadata();
+metadata.add('foo', 'bar1');
+metadata.add('foo', 'bar2');
 
 const param: HelloRequest = new HelloRequest();
 param.setName(argv);
@@ -25,8 +39,18 @@ if (argv !== 'stream') {
 
     logger.info('sayHello:', res.getMessage());
   });
+  // rpc sayHello with Metadata
+  client.sayHello(param, metadata, (err: ServiceError | null, res: HelloResponse) => {
+    if (err) {
+      logger.error('sayHello:', err.message);
 
-  // https://github.com/grpc/grpc-node/issues/54
+      return;
+    }
+
+    logger.info('sayHello:', res.getMessage());
+  });
+
+  // rpc sayHello with Promise, https://github.com/grpc/grpc-node/issues/54
   const sayHello: Promise<HelloResponse> = new Promise<HelloResponse>((resolve: Function, reject: Function): void => {
     client.sayHello(param, (err: ServiceError | null, res: HelloResponse) => {
       if (err) {
@@ -40,7 +64,7 @@ if (argv !== 'stream') {
   });
   sayHello
     .then((res: HelloResponse) => logger.info('sayHello:', res.getMessage()))
-    .catch((err: ServiceError) => logger.error('sayHello:', `${err.name} / ${err.code} / ${err.message}`));
+    .catch((err: ServiceError) => logger.error('sayHello:', err.message));
 } else {
   // rpc sayHelloStreamRequest
   const streamRequest: ClientWritableStream<HelloRequest> = client.sayHelloStreamRequest((err: ServiceError | null, res: HelloResponse) => {
