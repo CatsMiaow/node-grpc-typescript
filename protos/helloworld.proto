@@ -1,13 +1,15 @@
 // https://developers.google.com/protocol-buffers/docs/proto3?hl=ko#json
 syntax = "proto3";
 
+// https://developers.google.com/protocol-buffers/docs/proto3#packages-and-name-resolution
 package helloworld;
 
+// https://developers.google.com/protocol-buffers/docs/style
 service Greeter {
-  rpc sayHello (HelloRequest) returns (HelloResponse);
-  rpc sayHelloStreamRequest (stream HelloRequest) returns (HelloResponse) {}
-  rpc sayHelloStreamResponse (HelloRequest) returns (stream HelloResponse) {}
-  rpc sayHelloStream (stream HelloRequest) returns (stream HelloResponse) {}
+  rpc SayHello (HelloRequest) returns (HelloResponse);
+  rpc SayHelloStreamRequest (stream HelloRequest) returns (HelloResponse) {}
+  rpc SayHelloStreamResponse (HelloRequest) returns (stream HelloResponse) {}
+  rpc SayHelloStream (stream HelloRequest) returns (stream HelloResponse) {}
 }
 
 message HelloRequest {
@@ -16,4 +18,5 @@ message HelloRequest {
 
 message HelloResponse {
   string message = 1;
+  bool snake_case = 2;
 }

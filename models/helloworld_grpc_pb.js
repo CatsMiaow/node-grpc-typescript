@@ -31,7 +31,7 @@ function deserialize_helloworld_HelloResponse(buffer_arg) {
 
 var GreeterService = exports.GreeterService = {
   sayHello: {
-    path: '/helloworld.Greeter/sayHello',
+    path: '/helloworld.Greeter/SayHello',
     requestStream: false,
     responseStream: false,
     requestType: helloworld_pb.HelloRequest,
@@ -42,7 +42,7 @@ var GreeterService = exports.GreeterService = {
     responseDeserialize: deserialize_helloworld_HelloResponse,
   },
   sayHelloStreamRequest: {
-    path: '/helloworld.Greeter/sayHelloStreamRequest',
+    path: '/helloworld.Greeter/SayHelloStreamRequest',
     requestStream: true,
     responseStream: false,
     requestType: helloworld_pb.HelloRequest,
@@ -53,7 +53,7 @@ var GreeterService = exports.GreeterService = {
     responseDeserialize: deserialize_helloworld_HelloResponse,
   },
   sayHelloStreamResponse: {
-    path: '/helloworld.Greeter/sayHelloStreamResponse',
+    path: '/helloworld.Greeter/SayHelloStreamResponse',
     requestStream: false,
     responseStream: true,
     requestType: helloworld_pb.HelloRequest,
@@ -64,7 +64,7 @@ var GreeterService = exports.GreeterService = {
     responseDeserialize: deserialize_helloworld_HelloResponse,
   },
   sayHelloStream: {
-    path: '/helloworld.Greeter/sayHelloStream',
+    path: '/helloworld.Greeter/SayHelloStream',
     requestStream: true,
     responseStream: true,
     requestType: helloworld_pb.HelloRequest,

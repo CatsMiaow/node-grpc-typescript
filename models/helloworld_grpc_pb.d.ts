@@ -7,14 +7,14 @@ import * as grpc from "grpc";
 import * as helloworld_pb from "./helloworld_pb";
 
 interface IGreeterService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
-    sayHello: IGreeterService_IsayHello;
-    sayHelloStreamRequest: IGreeterService_IsayHelloStreamRequest;
-    sayHelloStreamResponse: IGreeterService_IsayHelloStreamResponse;
-    sayHelloStream: IGreeterService_IsayHelloStream;
+    sayHello: IGreeterService_ISayHello;
+    sayHelloStreamRequest: IGreeterService_ISayHelloStreamRequest;
+    sayHelloStreamResponse: IGreeterService_ISayHelloStreamResponse;
+    sayHelloStream: IGreeterService_ISayHelloStream;
 }
 
-interface IGreeterService_IsayHello extends grpc.MethodDefinition<helloworld_pb.HelloRequest, helloworld_pb.HelloResponse> {
-    path: string; // "/helloworld.Greeter/sayHello"
+interface IGreeterService_ISayHello extends grpc.MethodDefinition<helloworld_pb.HelloRequest, helloworld_pb.HelloResponse> {
+    path: string; // "/helloworld.Greeter/SayHello"
     requestStream: boolean; // false
     responseStream: boolean; // false
     requestSerialize: grpc.serialize<helloworld_pb.HelloRequest>;
@@ -22,8 +22,8 @@ interface IGreeterService_IsayHello extends grpc.MethodDefinition<helloworld_pb.
     responseSerialize: grpc.serialize<helloworld_pb.HelloResponse>;
     responseDeserialize: grpc.deserialize<helloworld_pb.HelloResponse>;
 }
-interface IGreeterService_IsayHelloStreamRequest extends grpc.MethodDefinition<helloworld_pb.HelloRequest, helloworld_pb.HelloResponse> {
-    path: string; // "/helloworld.Greeter/sayHelloStreamRequest"
+interface IGreeterService_ISayHelloStreamRequest extends grpc.MethodDefinition<helloworld_pb.HelloRequest, helloworld_pb.HelloResponse> {
+    path: string; // "/helloworld.Greeter/SayHelloStreamRequest"
     requestStream: boolean; // true
     responseStream: boolean; // false
     requestSerialize: grpc.serialize<helloworld_pb.HelloRequest>;
@@ -31,8 +31,8 @@ interface IGreeterService_IsayHelloStreamRequest extends grpc.MethodDefinition<h
     responseSerialize: grpc.serialize<helloworld_pb.HelloResponse>;
     responseDeserialize: grpc.deserialize<helloworld_pb.HelloResponse>;
 }
-interface IGreeterService_IsayHelloStreamResponse extends grpc.MethodDefinition<helloworld_pb.HelloRequest, helloworld_pb.HelloResponse> {
-    path: string; // "/helloworld.Greeter/sayHelloStreamResponse"
+interface IGreeterService_ISayHelloStreamResponse extends grpc.MethodDefinition<helloworld_pb.HelloRequest, helloworld_pb.HelloResponse> {
+    path: string; // "/helloworld.Greeter/SayHelloStreamResponse"
     requestStream: boolean; // false
     responseStream: boolean; // true
     requestSerialize: grpc.serialize<helloworld_pb.HelloRequest>;
@@ -40,8 +40,8 @@ interface IGreeterService_IsayHelloStreamResponse extends grpc.MethodDefinition<
     responseSerialize: grpc.serialize<helloworld_pb.HelloResponse>;
     responseDeserialize: grpc.deserialize<helloworld_pb.HelloResponse>;
 }
-interface IGreeterService_IsayHelloStream extends grpc.MethodDefinition<helloworld_pb.HelloRequest, helloworld_pb.HelloResponse> {
-    path: string; // "/helloworld.Greeter/sayHelloStream"
+interface IGreeterService_ISayHelloStream extends grpc.MethodDefinition<helloworld_pb.HelloRequest, helloworld_pb.HelloResponse> {
+    path: string; // "/helloworld.Greeter/SayHelloStream"
     requestStream: boolean; // true
     responseStream: boolean; // true
     requestSerialize: grpc.serialize<helloworld_pb.HelloRequest>;
