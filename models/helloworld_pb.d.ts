@@ -4,10 +4,29 @@
 /* tslint:disable */
 
 import * as jspb from "google-protobuf";
+import * as google_protobuf_struct_pb from "google-protobuf/google/protobuf/struct_pb";
 
 export class HelloRequest extends jspb.Message { 
     getName(): string;
     setName(value: string): void;
+
+
+    hasParamStruct(): boolean;
+    clearParamStruct(): void;
+    getParamStruct(): google_protobuf_struct_pb.Struct | undefined;
+    setParamStruct(value?: google_protobuf_struct_pb.Struct): void;
+
+
+    hasParamListValue(): boolean;
+    clearParamListValue(): void;
+    getParamListValue(): google_protobuf_struct_pb.ListValue | undefined;
+    setParamListValue(value?: google_protobuf_struct_pb.ListValue): void;
+
+
+    hasParamValue(): boolean;
+    clearParamValue(): void;
+    getParamValue(): google_protobuf_struct_pb.Value | undefined;
+    setParamValue(value?: google_protobuf_struct_pb.Value): void;
 
 
     serializeBinary(): Uint8Array;
@@ -23,12 +42,36 @@ export class HelloRequest extends jspb.Message {
 export namespace HelloRequest {
     export type AsObject = {
         name: string,
+        paramStruct?: google_protobuf_struct_pb.Struct.AsObject,
+        paramListValue?: google_protobuf_struct_pb.ListValue.AsObject,
+        paramValue?: google_protobuf_struct_pb.Value.AsObject,
     }
 }
 
 export class HelloResponse extends jspb.Message { 
     getMessage(): string;
     setMessage(value: string): void;
+
+    getSnakeCase(): boolean;
+    setSnakeCase(value: boolean): void;
+
+
+    hasParamStruct(): boolean;
+    clearParamStruct(): void;
+    getParamStruct(): google_protobuf_struct_pb.Struct | undefined;
+    setParamStruct(value?: google_protobuf_struct_pb.Struct): void;
+
+
+    hasParamListValue(): boolean;
+    clearParamListValue(): void;
+    getParamListValue(): google_protobuf_struct_pb.ListValue | undefined;
+    setParamListValue(value?: google_protobuf_struct_pb.ListValue): void;
+
+
+    hasParamValue(): boolean;
+    clearParamValue(): void;
+    getParamValue(): google_protobuf_struct_pb.Value | undefined;
+    setParamValue(value?: google_protobuf_struct_pb.Value): void;
 
 
     serializeBinary(): Uint8Array;
@@ -44,5 +87,9 @@ export class HelloResponse extends jspb.Message {
 export namespace HelloResponse {
     export type AsObject = {
         message: string,
+        snakeCase: boolean,
+        paramStruct?: google_protobuf_struct_pb.Struct.AsObject,
+        paramListValue?: google_protobuf_struct_pb.ListValue.AsObject,
+        paramValue?: google_protobuf_struct_pb.Value.AsObject,
     }
 }

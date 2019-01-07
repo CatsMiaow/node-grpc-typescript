@@ -3,6 +3,7 @@ import { ClientDuplexStream, ClientReadableStream, ClientWritableStream, credent
 import { GreeterClient } from '../models/helloworld_grpc_pb';
 import { HelloRequest, HelloResponse } from '../models/helloworld_pb';
 import { logger } from './utils';
+import { Struct, ListValue, Value } from 'google-protobuf/google/protobuf/struct_pb';
 
 let argv: string = 'world';
 if (process.argv.length >= 3) {
@@ -29,6 +30,10 @@ const param: HelloRequest = new HelloRequest();
 param.setName(argv);
 
 if (argv !== 'stream') {
+  param.setParamStruct(Struct.fromJavaScript({ foo: 'bar', bar: 'foo' }));
+  param.setParamListValue(ListValue.fromJavaScript([{ foo: 'bar' }, { bar: 'foo' }]));
+  param.setParamValue(Value.fromJavaScript('Any Value'));
+
   // rpc sayHello
   client.sayHello(param, (err: ServiceError | null, res: HelloResponse) => {
     if (err) {
@@ -38,16 +43,23 @@ if (argv !== 'stream') {
     }
 
     logger.info('sayHello:', res.getMessage());
+    logger.info('sayHelloStruct:', (<Struct>res.getParamStruct()).toJavaScript());
+    logger.info('sayHelloListValue:', (<ListValue>res.getParamListValue()).toJavaScript());
+
+    const value: Value | undefined = res.getParamValue();
+    if (value) {
+      logger.info('sayHelloValue:', value.toJavaScript());
+    }
   });
   // rpc sayHello with Metadata
   client.sayHello(param, metadata, (err: ServiceError | null, res: HelloResponse) => {
     if (err) {
-      logger.error('sayHello:', err.message);
+      logger.error('sayHelloMetadata:', err.message);
 
       return;
     }
 
-    logger.info('sayHello:', res.getMessage());
+    logger.info('sayHelloMetadata:', res.getMessage());
   });
 
   // rpc sayHello with Promise, https://github.com/grpc/grpc-node/issues/54
@@ -63,8 +75,8 @@ if (argv !== 'stream') {
     });
   });
   sayHello
-    .then((res: HelloResponse) => logger.info('sayHello:', res.getMessage()))
-    .catch((err: ServiceError) => logger.error('sayHello:', err.message));
+    .then((res: HelloResponse) => logger.info('sayHelloPromise:', res.getMessage()))
+    .catch((err: ServiceError) => logger.error('sayHelloPromise:', err.message));
 } else {
   // rpc sayHelloStreamRequest
   const streamRequest: ClientWritableStream<HelloRequest> = client.sayHelloStreamRequest((err: ServiceError | null, res: HelloResponse) => {

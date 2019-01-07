@@ -2,9 +2,11 @@
 
 // Original file comments:
 // https://developers.google.com/protocol-buffers/docs/proto3?hl=ko#json
+// https://developers.google.com/protocol-buffers/docs/reference/proto3-spec
 'use strict';
 var grpc = require('grpc');
 var helloworld_pb = require('./helloworld_pb.js');
+var google_protobuf_struct_pb = require('google-protobuf/google/protobuf/struct_pb.js');
 
 function serialize_helloworld_HelloRequest(arg) {
   if (!(arg instanceof helloworld_pb.HelloRequest)) {
@@ -29,6 +31,7 @@ function deserialize_helloworld_HelloResponse(buffer_arg) {
 }
 
 
+// https://developers.google.com/protocol-buffers/docs/style
 var GreeterService = exports.GreeterService = {
   sayHello: {
     path: '/helloworld.Greeter/SayHello',

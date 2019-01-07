@@ -13,6 +13,7 @@
     "client": "node dist/client"
   },
   "dependencies": {
+    "google-protobuf": "^3.6.1",
     "grpc": "^1.17.0"
   },
   "devDependencies": {

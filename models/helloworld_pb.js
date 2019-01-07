@@ -11,6 +11,7 @@ var jspb = require('google-protobuf');
 var goog = jspb;
 var global = Function('return this')();
 
+var google_protobuf_struct_pb = require('google-protobuf/google/protobuf/struct_pb.js');
 goog.exportSymbol('proto.helloworld.HelloRequest', null, global);
 goog.exportSymbol('proto.helloworld.HelloResponse', null, global);
 
@@ -60,7 +61,10 @@ proto.helloworld.HelloRequest.prototype.toObject = function(opt_includeInstance)
  */
 proto.helloworld.HelloRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, "")
+    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    paramStruct: (f = msg.getParamStruct()) && google_protobuf_struct_pb.Struct.toObject(includeInstance, f),
+    paramListValue: (f = msg.getParamListValue()) && google_protobuf_struct_pb.ListValue.toObject(includeInstance, f),
+    paramValue: (f = msg.getParamValue()) && google_protobuf_struct_pb.Value.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -101,6 +105,21 @@ proto.helloworld.HelloRequest.deserializeBinaryFromReader = function(msg, reader
       var value = /** @type {string} */ (reader.readString());
       msg.setName(value);
       break;
+    case 2:
+      var value = new google_protobuf_struct_pb.Struct;
+      reader.readMessage(value,google_protobuf_struct_pb.Struct.deserializeBinaryFromReader);
+      msg.setParamStruct(value);
+      break;
+    case 3:
+      var value = new google_protobuf_struct_pb.ListValue;
+      reader.readMessage(value,google_protobuf_struct_pb.ListValue.deserializeBinaryFromReader);
+      msg.setParamListValue(value);
+      break;
+    case 4:
+      var value = new google_protobuf_struct_pb.Value;
+      reader.readMessage(value,google_protobuf_struct_pb.Value.deserializeBinaryFromReader);
+      msg.setParamValue(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -137,6 +156,30 @@ proto.helloworld.HelloRequest.serializeBinaryToWriter = function(message, writer
       f
     );
   }
+  f = message.getParamStruct();
+  if (f != null) {
+    writer.writeMessage(
+      2,
+      f,
+      google_protobuf_struct_pb.Struct.serializeBinaryToWriter
+    );
+  }
+  f = message.getParamListValue();
+  if (f != null) {
+    writer.writeMessage(
+      3,
+      f,
+      google_protobuf_struct_pb.ListValue.serializeBinaryToWriter
+    );
+  }
+  f = message.getParamValue();
+  if (f != null) {
+    writer.writeMessage(
+      4,
+      f,
+      google_protobuf_struct_pb.Value.serializeBinaryToWriter
+    );
+  }
 };
 
 
@@ -152,6 +195,96 @@ proto.helloworld.HelloRequest.prototype.getName = function() {
 /** @param {string} value */
 proto.helloworld.HelloRequest.prototype.setName = function(value) {
   jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * optional google.protobuf.Struct param_struct = 2;
+ * @return {?proto.google.protobuf.Struct}
+ */
+proto.helloworld.HelloRequest.prototype.getParamStruct = function() {
+  return /** @type{?proto.google.protobuf.Struct} */ (
+    jspb.Message.getWrapperField(this, google_protobuf_struct_pb.Struct, 2));
+};
+
+
+/** @param {?proto.google.protobuf.Struct|undefined} value */
+proto.helloworld.HelloRequest.prototype.setParamStruct = function(value) {
+  jspb.Message.setWrapperField(this, 2, value);
+};
+
+
+proto.helloworld.HelloRequest.prototype.clearParamStruct = function() {
+  this.setParamStruct(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.helloworld.HelloRequest.prototype.hasParamStruct = function() {
+  return jspb.Message.getField(this, 2) != null;
+};
+
+
+/**
+ * optional google.protobuf.ListValue param_list_value = 3;
+ * @return {?proto.google.protobuf.ListValue}
+ */
+proto.helloworld.HelloRequest.prototype.getParamListValue = function() {
+  return /** @type{?proto.google.protobuf.ListValue} */ (
+    jspb.Message.getWrapperField(this, google_protobuf_struct_pb.ListValue, 3));
+};
+
+
+/** @param {?proto.google.protobuf.ListValue|undefined} value */
+proto.helloworld.HelloRequest.prototype.setParamListValue = function(value) {
+  jspb.Message.setWrapperField(this, 3, value);
+};
+
+
+proto.helloworld.HelloRequest.prototype.clearParamListValue = function() {
+  this.setParamListValue(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.helloworld.HelloRequest.prototype.hasParamListValue = function() {
+  return jspb.Message.getField(this, 3) != null;
+};
+
+
+/**
+ * optional google.protobuf.Value param_value = 4;
+ * @return {?proto.google.protobuf.Value}
+ */
+proto.helloworld.HelloRequest.prototype.getParamValue = function() {
+  return /** @type{?proto.google.protobuf.Value} */ (
+    jspb.Message.getWrapperField(this, google_protobuf_struct_pb.Value, 4));
+};
+
+
+/** @param {?proto.google.protobuf.Value|undefined} value */
+proto.helloworld.HelloRequest.prototype.setParamValue = function(value) {
+  jspb.Message.setWrapperField(this, 4, value);
+};
+
+
+proto.helloworld.HelloRequest.prototype.clearParamValue = function() {
+  this.setParamValue(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.helloworld.HelloRequest.prototype.hasParamValue = function() {
+  return jspb.Message.getField(this, 4) != null;
 };
 
 
@@ -202,7 +335,11 @@ proto.helloworld.HelloResponse.prototype.toObject = function(opt_includeInstance
  */
 proto.helloworld.HelloResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    message: jspb.Message.getFieldWithDefault(msg, 1, "")
+    message: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    snakeCase: jspb.Message.getFieldWithDefault(msg, 2, false),
+    paramStruct: (f = msg.getParamStruct()) && google_protobuf_struct_pb.Struct.toObject(includeInstance, f),
+    paramListValue: (f = msg.getParamListValue()) && google_protobuf_struct_pb.ListValue.toObject(includeInstance, f),
+    paramValue: (f = msg.getParamValue()) && google_protobuf_struct_pb.Value.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -243,6 +380,25 @@ proto.helloworld.HelloResponse.deserializeBinaryFromReader = function(msg, reade
       var value = /** @type {string} */ (reader.readString());
       msg.setMessage(value);
       break;
+    case 2:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setSnakeCase(value);
+      break;
+    case 3:
+      var value = new google_protobuf_struct_pb.Struct;
+      reader.readMessage(value,google_protobuf_struct_pb.Struct.deserializeBinaryFromReader);
+      msg.setParamStruct(value);
+      break;
+    case 4:
+      var value = new google_protobuf_struct_pb.ListValue;
+      reader.readMessage(value,google_protobuf_struct_pb.ListValue.deserializeBinaryFromReader);
+      msg.setParamListValue(value);
+      break;
+    case 5:
+      var value = new google_protobuf_struct_pb.Value;
+      reader.readMessage(value,google_protobuf_struct_pb.Value.deserializeBinaryFromReader);
+      msg.setParamValue(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -279,6 +435,37 @@ proto.helloworld.HelloResponse.serializeBinaryToWriter = function(message, write
       f
     );
   }
+  f = message.getSnakeCase();
+  if (f) {
+    writer.writeBool(
+      2,
+      f
+    );
+  }
+  f = message.getParamStruct();
+  if (f != null) {
+    writer.writeMessage(
+      3,
+      f,
+      google_protobuf_struct_pb.Struct.serializeBinaryToWriter
+    );
+  }
+  f = message.getParamListValue();
+  if (f != null) {
+    writer.writeMessage(
+      4,
+      f,
+      google_protobuf_struct_pb.ListValue.serializeBinaryToWriter
+    );
+  }
+  f = message.getParamValue();
+  if (f != null) {
+    writer.writeMessage(
+      5,
+      f,
+      google_protobuf_struct_pb.Value.serializeBinaryToWriter
+    );
+  }
 };
 
 
@@ -294,6 +481,113 @@ proto.helloworld.HelloResponse.prototype.getMessage = function() {
 /** @param {string} value */
 proto.helloworld.HelloResponse.prototype.setMessage = function(value) {
   jspb.Message.setField(this, 1, value);
+};
+
+
+/**
+ * optional bool snake_case = 2;
+ * Note that Boolean fields may be set to 0/1 when serialized from a Java server.
+ * You should avoid comparisons like {@code val === true/false} in those cases.
+ * @return {boolean}
+ */
+proto.helloworld.HelloResponse.prototype.getSnakeCase = function() {
+  return /** @type {boolean} */ (jspb.Message.getFieldWithDefault(this, 2, false));
+};
+
+
+/** @param {boolean} value */
+proto.helloworld.HelloResponse.prototype.setSnakeCase = function(value) {
+  jspb.Message.setField(this, 2, value);
+};
+
+
+/**
+ * optional google.protobuf.Struct param_struct = 3;
+ * @return {?proto.google.protobuf.Struct}
+ */
+proto.helloworld.HelloResponse.prototype.getParamStruct = function() {
+  return /** @type{?proto.google.protobuf.Struct} */ (
+    jspb.Message.getWrapperField(this, google_protobuf_struct_pb.Struct, 3));
+};
+
+
+/** @param {?proto.google.protobuf.Struct|undefined} value */
+proto.helloworld.HelloResponse.prototype.setParamStruct = function(value) {
+  jspb.Message.setWrapperField(this, 3, value);
+};
+
+
+proto.helloworld.HelloResponse.prototype.clearParamStruct = function() {
+  this.setParamStruct(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.helloworld.HelloResponse.prototype.hasParamStruct = function() {
+  return jspb.Message.getField(this, 3) != null;
+};
+
+
+/**
+ * optional google.protobuf.ListValue param_list_value = 4;
+ * @return {?proto.google.protobuf.ListValue}
+ */
+proto.helloworld.HelloResponse.prototype.getParamListValue = function() {
+  return /** @type{?proto.google.protobuf.ListValue} */ (
+    jspb.Message.getWrapperField(this, google_protobuf_struct_pb.ListValue, 4));
+};
+
+
+/** @param {?proto.google.protobuf.ListValue|undefined} value */
+proto.helloworld.HelloResponse.prototype.setParamListValue = function(value) {
+  jspb.Message.setWrapperField(this, 4, value);
+};
+
+
+proto.helloworld.HelloResponse.prototype.clearParamListValue = function() {
+  this.setParamListValue(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.helloworld.HelloResponse.prototype.hasParamListValue = function() {
+  return jspb.Message.getField(this, 4) != null;
+};
+
+
+/**
+ * optional google.protobuf.Value param_value = 5;
+ * @return {?proto.google.protobuf.Value}
+ */
+proto.helloworld.HelloResponse.prototype.getParamValue = function() {
+  return /** @type{?proto.google.protobuf.Value} */ (
+    jspb.Message.getWrapperField(this, google_protobuf_struct_pb.Value, 5));
+};
+
+
+/** @param {?proto.google.protobuf.Value|undefined} value */
+proto.helloworld.HelloResponse.prototype.setParamValue = function(value) {
+  jspb.Message.setWrapperField(this, 5, value);
+};
+
+
+proto.helloworld.HelloResponse.prototype.clearParamValue = function() {
+  this.setParamValue(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {!boolean}
+ */
+proto.helloworld.HelloResponse.prototype.hasParamValue = function() {
+  return jspb.Message.getField(this, 5) != null;
 };
 
 

@@ -24,17 +24,20 @@
     // template strings
     "no-multiline-string": false,
 
-    // text().trim().replace() ...
-    "newline-per-chained-call": false,
-
     // Request: if you expect binary data, you should set encoding: null
     "no-null-keyword": false,
 
-    // !, &&, || 연산자 Only boolean
-    "strict-boolean-expressions": false,
-
     // node_modules .d.ts any return
     "no-unsafe-any": false,
+
+    // import { Value } from 'google-protobuf/google/protobuf/struct_pb'
+    "no-submodule-imports": [true, "google-protobuf"],
+
+    // text().trim().replace() ...
+    "newline-per-chained-call": false,
+
+    // !, &&, || 연산자 Only boolean
+    "strict-boolean-expressions": false,
 
     // node_modules .then() return
     "await-promise": false,

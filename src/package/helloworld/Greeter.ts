@@ -1,6 +1,7 @@
 import { randomBytes } from 'crypto';
-import { MetadataValue, sendUnaryData, ServerDuplexStream, ServerReadableStream, ServerUnaryCall,
-  ServerWriteableStream, status } from 'grpc';
+import { ListValue, Struct, Value } from 'google-protobuf/google/protobuf/struct_pb';
+import { MetadataValue, sendUnaryData, ServerDuplexStream, ServerReadableStream, ServerUnaryCall, ServerWriteableStream,
+  status } from 'grpc';
 
 import { IGreeterServer } from '../../../models/helloworld_grpc_pb';
 import { HelloRequest, HelloResponse } from '../../../models/helloworld_pb';
@@ -29,6 +30,17 @@ export class Greeter implements IGreeterServer {
 
     const metadataValue: MetadataValue[] = call.metadata.get('foo');
     res.setMessage(`Hello ${metadataValue.length > 0 ? metadataValue : name}`);
+
+    const paramStruct: Struct | undefined = call.request.getParamStruct();
+    const paramListValue: ListValue | undefined = call.request.getParamListValue();
+    const paramValue: Value | undefined = call.request.getParamValue();
+
+    if (paramStruct) {
+      //= res.setParamStruct(paramStruct);
+      res.setParamStruct(Struct.fromJavaScript(paramStruct.toJavaScript()));
+    }
+    res.setParamListValue(paramListValue);
+    res.setParamValue(paramValue);
 
     callback(null, res);
   }

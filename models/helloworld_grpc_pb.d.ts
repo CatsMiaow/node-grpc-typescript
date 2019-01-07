@@ -5,6 +5,7 @@
 
 import * as grpc from "grpc";
 import * as helloworld_pb from "./helloworld_pb";
+import * as google_protobuf_struct_pb from "google-protobuf/google/protobuf/struct_pb";
 
 interface IGreeterService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
     sayHello: IGreeterService_ISayHello;
