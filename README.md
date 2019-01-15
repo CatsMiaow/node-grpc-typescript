@@ -21,16 +21,15 @@ $ npm start
 
 ### Client Test
 ```sh
-$ node dist/client
-# OR
-$ npm run client
-# Request Parameter
+# 1. Request
+$ npm run client #= node dist/client
+# 2. with Parameter
 $ npm run client blahblahblah
-# Request Error
+# 3. Error
 $ npm run client error
-# Request Stream
+# 4. Stream
 $ npm run client stream
-# Request Health Check
+# 5. Health Check
 $ npm run health
 ```
 
