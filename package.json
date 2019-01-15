@@ -10,7 +10,8 @@
     "build:proto": "node bin/proto",
     "prestart": "npm run lint && npm run build",
     "start": "node dist/server",
-    "client": "node dist/client"
+    "client": "node dist/client",
+    "health": "node dist/health"
   },
   "dependencies": {
     "google-protobuf": "^3.6.1",

@@ -36,13 +36,13 @@
     // text().trim().replace() ...
     "newline-per-chained-call": false,
 
-    // !, &&, || 연산자 Only boolean
+    // !, &&, || Operator Only boolean
     "strict-boolean-expressions": false,
 
     // node_modules .then() return
     "await-promise": false,
 
-    // () => logger.error())
-    "no-void-expression": [true, "ignore-arrow-function-shorthand"]
+    // return logger.info()
+    "no-void-expression": false
   }
 }

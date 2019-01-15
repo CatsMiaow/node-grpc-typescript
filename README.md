@@ -30,6 +30,8 @@ $ npm run client blahblahblah
 $ npm run client error
 # Request Stream
 $ npm run client stream
+# Request Health Check
+$ npm run health
 ```
 
 #### node_modules

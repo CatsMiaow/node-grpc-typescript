@@ -18,6 +18,7 @@ const authCred: CallCredentials = credentials.createFromMetadataGenerator((param
 const client: GreeterClient = new GreeterClient('localhost:50051', credentials.combineChannelCredentials(baseCred, authCred));
 */
 const client: GreeterClient = new GreeterClient('localhost:50051', credentials.createInsecure());
+logger.info(`gRPC:GreeterClient`, new Date().toDateString());
 
 let argv: string = 'world';
 if (process.argv.length >= 3) {
@@ -38,9 +39,7 @@ async function example(): Promise<void> {
   // rpc sayHello with callback, https://github.com/grpc/grpc-node/issues/54
   client.sayHello(param, (err: ServiceError | null, res: HelloResponse) => {
     if (err) {
-      logger.error('sayBasic:', err.message);
-
-      return;
+      return logger.error('sayBasic:', err.message);
     }
 
     logger.info('sayBasic:', res.getMessage());
@@ -67,9 +66,7 @@ if (argv !== 'stream') {
   // rpc sayHelloStreamRequest
   const streamRequest: ClientWritableStream<HelloRequest> = client.sayHelloStreamRequest((err: ServiceError | null, res: HelloResponse) => {
     if (err) {
-      logger.error('sayHelloStreamRequest:', err);
-
-      return;
+      return logger.error('sayHelloStreamRequest:', err);
     }
 
     logger.info('sayHelloStreamRequest:', res.getMessage());

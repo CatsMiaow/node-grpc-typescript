@@ -3,15 +3,15 @@ import { ListValue, Struct, Value } from 'google-protobuf/google/protobuf/struct
 import { MetadataValue, sendUnaryData, ServerDuplexStream, ServerReadableStream, ServerUnaryCall, ServerWriteableStream,
   status } from 'grpc';
 
-import { IGreeterServer } from '../../../models/helloworld_grpc_pb';
-import { HelloRequest, HelloResponse } from '../../../models/helloworld_pb';
-import { logger, ServiceError } from '../../utils';
+import { GreeterService, IGreeterServer } from '../../models/helloworld_grpc_pb';
+import { HelloRequest, HelloResponse } from '../../models/helloworld_pb';
+import { logger, ServiceError } from '../utils';
 
 /**
  * package helloworld
  * service Greeter
  */
-export class Greeter implements IGreeterServer {
+class Greeter implements IGreeterServer {
   /**
    * Implements the SayHello RPC method.
    */
@@ -23,9 +23,7 @@ export class Greeter implements IGreeterServer {
 
     if (name === 'error') {
       // https://grpc.io/grpc/node/grpc.html#.status__anchor
-      callback(new ServiceError(status.INVALID_ARGUMENT, 'InvalidValue'), null);
-
-      return;
+      return callback(new ServiceError(status.INVALID_ARGUMENT, 'InvalidValue'), null);
     }
 
     const metadataValue: MetadataValue[] = call.metadata.get('foo');
@@ -88,3 +86,8 @@ export class Greeter implements IGreeterServer {
     });
   }
 }
+
+export {
+  Greeter,
+  GreeterService
+};
