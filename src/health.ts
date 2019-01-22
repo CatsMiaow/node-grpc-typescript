@@ -7,8 +7,13 @@ import { logger } from './utils';
 const health: HealthClient = new HealthClient('localhost:50051', credentials.createInsecure());
 logger.info(`gRPC:HealthClient`, new Date().toDateString());
 
+let argv: string = 'helloworld.Greeter';
+if (process.argv.length >= 3) {
+  argv = process.argv[2];
+}
+
 const param: HealthCheckRequest = new HealthCheckRequest();
-param.setService('helloworld.Greeter');
+param.setService(argv);
 
 health.check(param, (err: ServiceError | null, res: HealthCheckResponse) => {
   if (err) {
