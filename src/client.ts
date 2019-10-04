@@ -36,7 +36,10 @@ metadata.add('foo', 'bar1');
 metadata.add('foo', 'bar2');
 
 async function example(): Promise<void> {
-  // rpc sayHello with callback, https://github.com/grpc/grpc-node/issues/54
+  /**
+   * rpc sayHello with callback
+   * https://github.com/grpc/grpc-node/issues/54
+   */
   client.sayHello(param, (err: ServiceError | null, res: HelloResponse) => {
     if (err) {
       return logger.error('sayBasic:', err.message);
@@ -45,7 +48,9 @@ async function example(): Promise<void> {
     logger.info('sayBasic:', res.getMessage());
   });
 
-  // rpc sayHello with Promise
+  /**
+   * rpc sayHello with Promise
+   */
   const sayHello: HelloResponse = await clientService.sayHello(param);
   logger.info('sayHello:', sayHello.getMessage());
   logger.info('sayHelloStruct:', (<Struct>sayHello.getParamStruct()).toJavaScript());
@@ -55,7 +60,9 @@ async function example(): Promise<void> {
     logger.info('sayHelloValue:', value.toJavaScript());
   }
 
-  // rpc sayHello with Metadata
+  /**
+   * rpc sayHello with Metadata
+   */
   const sayMetadata: HelloResponse = await clientService.sayHello(param, metadata);
   logger.info('sayMetadata:', sayMetadata.getMessage());
 }
@@ -63,7 +70,9 @@ async function example(): Promise<void> {
 if (argv !== 'stream') {
   example().catch((err: Error) => logger.error(err));
 } else {
-  // rpc sayHelloStreamRequest
+  /**
+   * rpc sayHelloStreamRequest
+   */
   const streamRequest: ClientWritableStream<HelloRequest> = client.sayHelloStreamRequest((err: ServiceError | null, res: HelloResponse) => {
     if (err) {
       return logger.error('sayHelloStreamRequest:', err);
@@ -79,7 +88,9 @@ if (argv !== 'stream') {
   }
   streamRequest.end();
 
-  // rpc sayHelloStreamResponse
+  /**
+   * rpc sayHelloStreamResponse
+   */
   const streamResponse: ClientReadableStream<HelloResponse> = client.sayHelloStreamResponse(param);
 
   const data: string[] = [];
@@ -91,7 +102,9 @@ if (argv !== 'stream') {
     logger.error('sayHelloStreamResponse:', err);
   });
 
-  // rpc sayHelloStream
+  /**
+   * rpc sayHelloStream
+   */
   const stream: ClientDuplexStream<HelloRequest, HelloResponse> = client.sayHelloStream();
   stream
     .on('data', (res: HelloResponse) => logger.info('sayHelloStream:', res.getMessage()))
