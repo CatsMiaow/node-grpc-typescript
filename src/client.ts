@@ -17,7 +17,16 @@ const authCred: CallCredentials = credentials.createFromMetadataGenerator((param
 });
 const client: GreeterClient = new GreeterClient('localhost:50051', credentials.combineChannelCredentials(baseCred, authCred));
 */
-const client: GreeterClient = new GreeterClient('localhost:50051', credentials.createInsecure());
+
+// https://github.com/grpc/grpc/blob/master/doc/keepalive.md
+// https://cloud.ibm.com/docs/services/blockchain?topic=blockchain-best-practices-app#best-practices-app-connections
+const client: GreeterClient = new GreeterClient('localhost:50051', credentials.createInsecure(), {
+  'grpc.keepalive_time_ms': 120000,
+  'grpc.http2.min_time_between_pings_ms': 120000,
+  'grpc.keepalive_timeout_ms': 20000,
+  'grpc.http2.max_pings_without_data': 0,
+  'grpc.keepalive_permit_without_calls': 1
+});
 logger.info(`gRPC:GreeterClient`, new Date().toDateString());
 
 let argv: string = 'world';

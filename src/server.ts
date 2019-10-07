@@ -12,7 +12,10 @@ if (process.env.NODE_APP_INSTANCE) {
 }
 
 // Do not use @grpc/proto-loader
-const server: Server = new Server();
+const server: Server = new Server({
+  'grpc.max_receive_message_length': -1,
+  'grpc.max_send_message_length': -1
+});
 server.addService(GreeterService, new Greeter());
 server.addService(HealthService, new Health());
 server.bind(`0.0.0.0:${port}`, ServerCredentials.createInsecure());
