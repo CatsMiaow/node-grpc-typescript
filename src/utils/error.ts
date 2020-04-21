@@ -13,6 +13,6 @@ export function serviceError(code: status, message: string): grpcServiceError {
   return {
     name: 'ServiceError',
     code,
-    message
+    message,
   };
 }

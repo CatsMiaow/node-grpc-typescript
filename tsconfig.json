@@ -18,14 +18,11 @@
     // "noUnusedParameters": true,
     // "suppressImplicitAnyIndexErrors": true,
     // "experimentalDecorators": true,
-    // "emitDecoratorMetadata": true,
-    "plugins": [
-      { "name": "typescript-tslint-plugin" }
-    ]
+    // "emitDecoratorMetadata": true
   },
   "include": [
-    "src/**/*",
-    "./typings/index.d.ts"
+    "./typings/index.d.ts",
+    "src/**/*"
   ],
   "exclude": [
     "node_modules"

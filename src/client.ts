@@ -25,13 +25,13 @@ const client: GreeterClient = new GreeterClient('localhost:50051', credentials.c
   'grpc.http2.min_time_between_pings_ms': 120000,
   'grpc.keepalive_timeout_ms': 20000,
   'grpc.http2.max_pings_without_data': 0,
-  'grpc.keepalive_permit_without_calls': 1
+  'grpc.keepalive_permit_without_calls': 1,
 });
-logger.info(`gRPC:GreeterClient`, new Date().toDateString());
+logger.info('gRPC:GreeterClient', new Date().toDateString());
 
-let argv: string = 'world';
+let argv = 'world';
 if (process.argv.length >= 3) {
-  argv = process.argv[2];
+  [,,argv] = process.argv;
 }
 
 const param: HelloRequest = new HelloRequest();
@@ -90,7 +90,7 @@ if (argv !== 'stream') {
     logger.info('sayHelloStreamRequest:', res.getMessage());
   });
 
-  for (let i: number = 1; i <= 10; i += 1) {
+  for (let i = 1; i <= 10; i += 1) {
     const req: HelloRequest = new HelloRequest();
     req.setName(`${argv}.${i}`);
     streamRequest.write(req);
@@ -120,7 +120,7 @@ if (argv !== 'stream') {
     .on('end', () => logger.info('sayHelloStream: End'))
     .on('error', (err: Error) => logger.error('sayHelloStream:', err));
 
-  for (let i: number = 1; i <= 10; i += 1) {
+  for (let i = 1; i <= 10; i += 1) {
     const req: HelloRequest = new HelloRequest();
     req.setName(`${argv}.${i}`);
     stream.write(req);

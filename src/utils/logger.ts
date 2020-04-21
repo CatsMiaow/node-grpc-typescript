@@ -1,12 +1,11 @@
+/* eslint-disable no-console */
 import { dirname } from 'path';
 
-// tslint:disable-next-line: no-any
-export type Parameter = [any?, ...any[]];
+export type Parameter = [unknown?, ...unknown[]];
 
 /**
  * Logger Class
  */
-/* tslint:disable:no-console */
 export class Logger {
   private readonly rootDir: string = dirname((<NodeModule>require.main).filename);
 
@@ -18,22 +17,22 @@ export class Logger {
 
   public info(...args: Parameter): void {
     args.push(`- ${this.trace()}`);
-    console.info.apply(console, args);
+    console.info(...args);
   }
 
   public warn(...args: Parameter): void {
     args.push(`- ${this.trace()}`);
-    console.warn.apply(console, args);
+    console.warn(...args);
   }
 
   public error(...args: Parameter): void {
     args.push(`- ${this.trace()}`);
-    console.error.apply(console, args);
+    console.error(...args);
   }
 
   private trace(): string {
-    const lines: string[] = (<string>new Error().stack).split('\n').slice(1);
-    const lineMatch: RegExpMatchArray | null = lines[2].match(/at (?:(.+)\s+)?\(?(?:(.+?):(\d+):(\d+)|([^)]+))\)?/);
+    const lines: string[] = (<string> new Error().stack).split('\n').slice(1);
+    const lineMatch: RegExpMatchArray | null = /at (?:(.+)\s+)?\(?(?:(.+?):(\d+):(\d+)|([^)]+))\)?/.exec(lines[2]);
 
     if (!lineMatch || lineMatch[2] === null || lineMatch[3] === null) {
       return '';
@@ -45,6 +44,5 @@ export class Logger {
     return `${fileName}:${line}`;
   }
 }
-/* tslint:enable:no-console */
 
 export const logger: Logger = new Logger();

@@ -34,7 +34,7 @@ class Greeter implements IGreeterServer {
     const paramValue: Value | undefined = call.request.getParamValue();
 
     if (paramStruct) {
-      //= res.setParamStruct(paramStruct);
+      // = res.setParamStruct(paramStruct);
       res.setParamStruct(Struct.fromJavaScript(paramStruct.toJavaScript()));
     }
     res.setParamListValue(paramListValue);
@@ -89,5 +89,5 @@ class Greeter implements IGreeterServer {
 
 export {
   Greeter,
-  GreeterService
+  GreeterService,
 };

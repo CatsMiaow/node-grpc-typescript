@@ -5,10 +5,10 @@ import { HealthService, IHealthServer } from '../../models/health_grpc_pb';
 import { HealthCheckRequest, HealthCheckResponse } from '../../models/health_pb';
 import { ServiceError } from '../utils';
 
-const ServingStatus: typeof HealthCheckResponse.ServingStatus = HealthCheckResponse.ServingStatus;
+const { ServingStatus } = HealthCheckResponse;
 const healthStatus: Map<string, HealthCheckResponse.ServingStatus> = new Map(Object.entries({
   '': ServingStatus.SERVING,
-  'helloworld.Greeter': ServingStatus.SERVING
+  'helloworld.Greeter': ServingStatus.SERVING,
 }));
 
 /**
@@ -34,5 +34,5 @@ export {
   Health,
   HealthService,
   healthStatus,
-  ServingStatus
+  ServingStatus,
 };
