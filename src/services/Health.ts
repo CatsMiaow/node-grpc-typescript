@@ -1,4 +1,3 @@
-
 import { sendUnaryData, ServerUnaryCall, status } from 'grpc';
 
 import { HealthService, IHealthServer } from '../../models/health_grpc_pb';
