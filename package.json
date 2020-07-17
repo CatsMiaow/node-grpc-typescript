@@ -14,25 +14,25 @@
     "health": "node dist/health"
   },
   "dependencies": {
-    "google-protobuf": "^3.11.4",
-    "grpc": "^1.24.2"
+    "google-protobuf": "^3.12.2",
+    "grpc": "^1.24.3"
   },
   "devDependencies": {
     "@types/google-protobuf": "^3.7.2",
-    "@types/node": "^13.13.1",
-    "@typescript-eslint/eslint-plugin": "^2.29.0",
-    "@typescript-eslint/parser": "^2.29.0",
-    "dtslint": "^3.4.1",
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb-typescript": "^7.2.1",
-    "eslint-plugin-import": "^2.20.2",
+    "@types/node": "^14.0.23",
+    "@typescript-eslint/eslint-plugin": "^3.6.1",
+    "@typescript-eslint/parser": "^3.6.1",
+    "dtslint": "^3.6.12",
+    "eslint": "^7.4.0",
+    "eslint-config-airbnb-typescript": "^8.0.2",
+    "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-sonarjs": "^0.5.0",
-    "grpc-tools": "^1.8.1",
-    "grpc_tools_node_protoc_ts": "^2.5.11",
-    "protobufjs": "^6.9.0",
+    "grpc-tools": "^1.9.0",
+    "grpc_tools_node_protoc_ts": "^4.1.0",
+    "protobufjs": "^6.10.1",
     "rimraf": "^3.0.2",
-    "shelljs": "^0.8.3",
-    "typescript": "^3.8.3"
+    "shelljs": "^0.8.4",
+    "typescript": "^3.9.7"
   },
   "repository": {
     "type": "git",
