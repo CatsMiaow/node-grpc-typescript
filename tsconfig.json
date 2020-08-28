@@ -6,20 +6,19 @@
     "outDir": "dist",
     "module": "commonjs",
     "moduleResolution": "node",
+    "incremental": true,
     "declaration": true,
     "newLine": "lf",
-    "strict": true, // noImplicitAny, noImplicitThis, alwaysStrict, strictBindCallApply, strictNullChecks, strictFunctionTypes, strictPropertyInitialization
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
-    "noFallthroughCasesInSwitch": true,
+    "noUnusedParameters": false,
     "removeComments": true,
     "sourceMap": true,
     "inlineSources": true,
     "forceConsistentCasingInFileNames": true,
-    // "noUnusedParameters": true,
-    // "suppressImplicitAnyIndexErrors": true,
-    // "experimentalDecorators": true,
-    // "emitDecoratorMetadata": true
+    "skipLibCheck": true
   },
   "include": [
     "typings/global.d.ts",
