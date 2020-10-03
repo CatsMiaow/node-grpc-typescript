@@ -33,7 +33,8 @@
     "spaced-comment": ["error", "always", { "line": { "markers": ["/", "#region", "#endregion"] } }],
 
     // Change eslint rule to @typescript-eslint rule
-    "lines-between-class-members": "off",
+    "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
+    "no-loop-func": "off",
     "no-return-await": "off",
     "no-unused-expressions": "off",
 
@@ -48,15 +49,9 @@
     // https://github.com/typescript-eslint/typescript-eslint/issues/977
     "@typescript-eslint/lines-between-class-members": "off",
     "@typescript-eslint/member-ordering": "error",
-    "@typescript-eslint/naming-convention": ["error",
-      { "selector": "default", "format": ["strictCamelCase"] },
-      { "selector": "variable", "format": ["camelCase", "PascalCase", "UPPER_CASE"] },
-      { "selector": "property", "format": null, "leadingUnderscore": "allow" },
-      { "selector": "typeLike", "format": ["StrictPascalCase"] },
-      { "selector": "enumMember", "format": ["UPPER_CASE"] }],
     "@typescript-eslint/no-floating-promises": ["error", { "ignoreIIFE": true, "ignoreVoid": true }],
-    // https://github.com/typescript-eslint/typescript-eslint/issues/902
     "@typescript-eslint/no-inferrable-types": ["error", { "ignoreParameters": true, "ignoreProperties": true }],
+    "@typescript-eslint/no-loop-func": "error",
     "@typescript-eslint/no-misused-promises": ["error", { "checksVoidReturn": false }],
     "@typescript-eslint/no-unnecessary-boolean-literal-compare": "error",
     "@typescript-eslint/no-unsafe-assignment": "off",
@@ -66,7 +61,7 @@
     "@typescript-eslint/prefer-optional-chain": "error",
     "@typescript-eslint/restrict-template-expressions": "off",
     "@typescript-eslint/return-await": "error",
-    "@typescript-eslint/typedef": "error",
+    "@typescript-eslint/typedef": ["error", { "arrowParameter": true, "memberVariableDeclaration": true, "parameter": true, "propertyDeclaration": true }],
     "@typescript-eslint/unbound-method": ["error", { "ignoreStatic": true }],
 
     "sonarjs/no-duplicate-string": "off"
