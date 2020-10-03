@@ -27,7 +27,7 @@ const client: GreeterClient = new GreeterClient('localhost:50051', credentials.c
   'grpc.http2.max_pings_without_data': 0,
   'grpc.keepalive_permit_without_calls': 1,
 });
-logger.info('gRPC:GreeterClient', new Date().toDateString());
+logger.info('gRPC:GreeterClient', new Date().toLocaleString());
 
 let argv = 'world';
 if (process.argv.length >= 3) {

@@ -21,7 +21,7 @@ server.addService(HealthService, new Health());
 server.bind(`0.0.0.0:${port}`, ServerCredentials.createInsecure());
 server.start();
 
-logger.info('gRPC:Server', new Date().toDateString());
+logger.info('gRPC:Server', new Date().toLocaleString());
 
 // Change service health status
 healthStatus.set('helloworld.Greeter', ServingStatus.NOT_SERVING);
