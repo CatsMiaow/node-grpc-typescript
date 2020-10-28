@@ -16,10 +16,11 @@ class Greeter implements IGreeterServer {
    * Implements the SayHello RPC method.
    */
   public sayHello(call: ServerUnaryCall<HelloRequest>, callback: sendUnaryData<HelloResponse>): void {
-    logger.info('sayHello:', call.request.toObject(), call.metadata.getMap());
+    logger.info('sayHello', Date.now());
 
     const res: HelloResponse = new HelloResponse();
     const name: string = call.request.getName();
+    logger.info('sayHelloName:', name);
 
     if (name === 'error') {
       // https://grpc.io/grpc/node/grpc.html#.status__anchor
@@ -27,11 +28,16 @@ class Greeter implements IGreeterServer {
     }
 
     const metadataValue: MetadataValue[] = call.metadata.get('foo');
+    logger.info('sayHelloMetadata:', metadataValue);
+
     res.setMessage(`Hello ${metadataValue.length > 0 ? metadataValue : name}`);
 
     const paramStruct: Struct | undefined = call.request.getParamStruct();
     const paramListValue: ListValue | undefined = call.request.getParamListValue();
     const paramValue: Value | undefined = call.request.getParamValue();
+    logger.info('sayHelloStruct:', paramStruct?.toJavaScript());
+    logger.info('sayHelloListValue:', paramListValue?.toJavaScript());
+    logger.info('sayHelloValue:', paramValue?.toJavaScript());
 
     if (paramStruct) {
       // = res.setParamStruct(paramStruct);

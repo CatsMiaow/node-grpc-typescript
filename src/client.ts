@@ -72,13 +72,11 @@ async function example(): Promise<void> {
   /**
    * rpc sayHello with Metadata
    */
-  const sayMetadata: HelloResponse = await clientService.sayHello(param, metadata);
-  logger.info('sayMetadata:', sayMetadata.getMessage());
+  const sayHelloMetadata: HelloResponse = await clientService.sayHello(param, metadata);
+  logger.info('sayHelloMetadata:', sayHelloMetadata.getMessage());
 }
 
-if (argv !== 'stream') {
-  example().catch((err: Error) => logger.error(err));
-} else {
+function exampleStream(): void {
   /**
    * rpc sayHelloStreamRequest
    */
@@ -127,3 +125,16 @@ if (argv !== 'stream') {
   }
   stream.end();
 }
+
+(async (): Promise<void> => {
+  try {
+    if (argv === 'stream') {
+      exampleStream();
+      return;
+    }
+
+    await example();
+  } catch (err) {
+    logger.error(err);
+  }
+})();
