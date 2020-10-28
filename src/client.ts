@@ -1,6 +1,6 @@
+import { ListValue, Struct, Value } from 'google-protobuf/google/protobuf/struct_pb';
 import { ClientDuplexStream, ClientReadableStream, ClientWritableStream, credentials, Metadata, ServiceError } from 'grpc';
 
-import { ListValue, Struct, Value } from 'google-protobuf/google/protobuf/struct_pb';
 import { GreeterClient } from '../models/helloworld_grpc_pb';
 import { HelloRequest, HelloResponse } from '../models/helloworld_pb';
 import { clientService } from './clientService';
