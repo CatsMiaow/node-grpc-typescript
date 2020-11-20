@@ -1,42 +1,45 @@
 # node-grpc-typescript
+
 Node.js gRPC Structure for TypeScript Example
 
-### Installation
+## Installation
+
 ```sh
-$ npm i
+npm i
 ```
 
-### Build
+## Build
+
 ```sh
-$ npm run build:proto # *.proto
-$ npm run build # *.ts
+npm run build:proto # *.proto
+npm run build # *.ts
 ```
 
-### Server Start
+## Server Start
+
 ```sh
-$ node dist/server
+node dist/server
 # OR
-$ npm start
+npm start
 ```
 
-### Client Test
+## Client Test
+
 ```sh
 # 1. Request
-$ npm run client #= node dist/client
+npm run client #= node dist/client
 # 2. with Parameter
-$ npm run client blahblahblah
+npm run client blahblahblah
 # 3. Error
-$ npm run client error
+npm run client error
 # 4. Stream
-$ npm run client stream
+npm run client stream
 # 5. Health Check
-$ npm run health
+npm run health
 ```
 
-#### node_modules
-[package.json](package.json)
+### Documentation
 
-##### Documentation
 * [Node.js gRPC](https://grpc.io/grpc/node/grpc.html)
 * [Protocol Buffers](https://developers.google.com/protocol-buffers/docs/proto3?hl=ko#json)
 * [TypeScript d.ts plugin for gRPC Tools](https://github.com/agreatfool/grpc_tools_node_protoc_ts)

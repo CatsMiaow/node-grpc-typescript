@@ -1,18 +1,12 @@
-import { ServiceError as grpcServiceError, status } from 'grpc';
+import { Metadata, ServiceError as grpcServiceError, status } from '@grpc/grpc-js';
 
 /**
  * https://grpc.io/grpc/node/grpc.html#~ServiceError__anchor
  */
-export class ServiceError implements grpcServiceError {
+export class ServiceError extends Error implements Partial<grpcServiceError> {
   public name: string = 'ServiceError';
 
-  constructor(public code: status, public message: string) {}
-}
-
-export function serviceError(code: status, message: string): grpcServiceError {
-  return {
-    name: 'ServiceError',
-    code,
-    message,
-  };
+  constructor(public code: status, public message: string, public details?: string, public metadata?: Metadata) {
+    super(message);
+  }
 }

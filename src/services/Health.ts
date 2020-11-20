@@ -1,4 +1,4 @@
-import { sendUnaryData, ServerUnaryCall, status } from 'grpc';
+import { sendUnaryData, ServerUnaryCall, status, UntypedHandleCall } from '@grpc/grpc-js';
 
 import { HealthService, IHealthServer } from '../../models/health_grpc_pb';
 import { HealthCheckRequest, HealthCheckResponse } from '../../models/health_pb';
@@ -15,7 +15,10 @@ const healthStatus: Map<string, HealthCheckResponse.ServingStatus> = new Map(Obj
  * https://github.com/grpc/grpc-node/tree/master/packages/grpc-health-check
  */
 class Health implements IHealthServer {
-  public check(call: ServerUnaryCall<HealthCheckRequest>, callback: sendUnaryData<HealthCheckResponse>): void {
+  [method: string]: UntypedHandleCall;
+
+  // public check: handleUnaryCall<HealthCheckRequest, HealthCheckResponse> = (call, callback) => {}
+  public check(call: ServerUnaryCall<HealthCheckRequest, HealthCheckResponse>, callback: sendUnaryData<HealthCheckResponse>): void {
     const service: string = call.request.getService();
 
     if (!healthStatus.has(service)) {

@@ -1,22 +1,10 @@
+import { ClientDuplexStream, ClientReadableStream, ClientWritableStream, credentials, Metadata, ServiceError } from '@grpc/grpc-js';
 import { ListValue, Struct, Value } from 'google-protobuf/google/protobuf/struct_pb';
-import { ClientDuplexStream, ClientReadableStream, ClientWritableStream, credentials, Metadata, ServiceError } from 'grpc';
 
 import { GreeterClient } from '../models/helloworld_grpc_pb';
 import { HelloRequest, HelloResponse } from '../models/helloworld_pb';
 import { clientService } from './clientService';
 import { logger } from './utils';
-
-/* // https://github.com/grpc/grpc-node/issues/543#issuecomment-427487420
-const baseCred: ChannelCredentials = credentials.createSsl();
-const authCred: CallCredentials = credentials.createFromMetadataGenerator((params: { service_url: string }, callback: MetadataCallback) => {
-  logger.info('createFromMetadataGenerator:', params);
-
-  const metadata: Metadata = new Metadata();
-  metadata.add('authorization', 'accessTokenValue');
-  callback(null, metadata);
-});
-const client: GreeterClient = new GreeterClient('localhost:50051', credentials.combineChannelCredentials(baseCred, authCred));
-*/
 
 // https://github.com/grpc/grpc/blob/master/doc/keepalive.md
 // https://cloud.ibm.com/docs/services/blockchain?topic=blockchain-best-practices-app#best-practices-app-connections

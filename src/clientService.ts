@@ -1,4 +1,4 @@
-import { credentials, Metadata, ServiceError } from 'grpc';
+import { credentials, Metadata, ServiceError } from '@grpc/grpc-js';
 
 import { GreeterClient } from '../models/helloworld_grpc_pb';
 import { HelloRequest, HelloResponse } from '../models/helloworld_pb';

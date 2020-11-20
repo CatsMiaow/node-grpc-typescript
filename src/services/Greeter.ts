@@ -1,7 +1,7 @@
+import { sendUnaryData, ServerDuplexStream, ServerReadableStream, ServerUnaryCall, ServerWritableStream,
+  MetadataValue, status, UntypedHandleCall } from '@grpc/grpc-js';
 import { randomBytes } from 'crypto';
 import { ListValue, Struct, Value } from 'google-protobuf/google/protobuf/struct_pb';
-import { MetadataValue, sendUnaryData, ServerDuplexStream, ServerReadableStream, ServerUnaryCall, ServerWriteableStream,
-  status } from 'grpc';
 
 import { GreeterService, IGreeterServer } from '../../models/helloworld_grpc_pb';
 import { HelloRequest, HelloResponse } from '../../models/helloworld_pb';
@@ -12,10 +12,14 @@ import { logger, ServiceError } from '../utils';
  * service Greeter
  */
 class Greeter implements IGreeterServer {
+  // Argument of type 'Greeter' is not assignable to parameter of type 'UntypedServiceImplementation'.
+  // Index signature is missing in type 'Greeter'.ts(2345)
+  [method: string]: UntypedHandleCall;
+
   /**
    * Implements the SayHello RPC method.
    */
-  public sayHello(call: ServerUnaryCall<HelloRequest>, callback: sendUnaryData<HelloResponse>): void {
+  public sayHello(call: ServerUnaryCall<HelloRequest, HelloResponse>, callback: sendUnaryData<HelloResponse>): void {
     logger.info('sayHello', Date.now());
 
     const res: HelloResponse = new HelloResponse();
@@ -49,7 +53,7 @@ class Greeter implements IGreeterServer {
     callback(null, res);
   }
 
-  public sayHelloStreamRequest(call: ServerReadableStream<HelloRequest>, callback: sendUnaryData<HelloResponse>): void {
+  public sayHelloStreamRequest(call: ServerReadableStream<HelloRequest, HelloResponse>, callback: sendUnaryData<HelloResponse>): void {
     logger.info('sayHelloStreamRequest:', call.getPeer());
 
     const data: string[] = [];
@@ -65,7 +69,7 @@ class Greeter implements IGreeterServer {
     });
   }
 
-  public sayHelloStreamResponse(call: ServerWriteableStream<HelloRequest>): void {
+  public sayHelloStreamResponse(call: ServerWritableStream<HelloRequest, HelloResponse>): void {
     logger.info('sayHelloStreamResponse:', call.request.toObject());
 
     const name: string = call.request.getName();

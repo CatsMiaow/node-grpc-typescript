@@ -1,4 +1,4 @@
-import { Server, ServerCredentials } from 'grpc';
+import { Server, ServerCredentials } from '@grpc/grpc-js';
 
 import { Greeter, GreeterService } from './services/Greeter';
 import { Health, HealthService, healthStatus, ServingStatus } from './services/Health';
@@ -16,12 +16,17 @@ const server: Server = new Server({
   'grpc.max_receive_message_length': -1,
   'grpc.max_send_message_length': -1,
 });
+
 server.addService(GreeterService, new Greeter());
 server.addService(HealthService, new Health());
-server.bind(`0.0.0.0:${port}`, ServerCredentials.createInsecure());
-server.start();
+server.bindAsync(`0.0.0.0:${port}`, ServerCredentials.createInsecure(), (err: Error | null, bindPort: number) => {
+  if (err) {
+    throw err;
+  }
 
-logger.info('gRPC:Server', new Date().toLocaleString());
+  logger.info(`gRPC:Server:${bindPort}`, new Date().toLocaleString());
+  server.start();
+});
 
 // Change service health status
 healthStatus.set('helloworld.Greeter', ServingStatus.NOT_SERVING);

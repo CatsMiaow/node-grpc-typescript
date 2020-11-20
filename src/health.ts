@@ -1,4 +1,4 @@
-import { credentials, ServiceError } from 'grpc';
+import { credentials, ServiceError } from '@grpc/grpc-js';
 
 import { HealthClient } from '../models/health_grpc_pb';
 import { HealthCheckRequest, HealthCheckResponse } from '../models/health_pb';
