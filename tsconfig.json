@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {},
-    "target": "ES2017",
+    "target": "ES2019",
     "outDir": "dist",
     "module": "commonjs",
     "moduleResolution": "node",
@@ -16,15 +16,9 @@
     "noUnusedParameters": false,
     "removeComments": true,
     "sourceMap": true,
-    "inlineSources": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
   },
-  "include": [
-    "typings/global.d.ts",
-    "src/**/*"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["typings/global.d.ts", "src/**/*"],
+  "exclude": ["node_modules"]
 }
