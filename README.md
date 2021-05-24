@@ -1,6 +1,6 @@
 # node-grpc-typescript
 
-Node.js gRPC Structure for TypeScript Example
+Node.js gRPC structure with [google-protobuf](https://www.npmjs.com/package/google-protobuf) for TypeScript example
 
 ## Installation
 
@@ -41,5 +41,5 @@ npm run health
 ### Documentation
 
 * [Node.js gRPC](https://grpc.io/grpc/node/grpc.html)
-* [Protocol Buffers](https://developers.google.com/protocol-buffers/docs/proto3?hl=ko#json)
+* [Protocol Buffers](https://developers.google.com/protocol-buffers/docs/proto3)
 * [TypeScript d.ts plugin for gRPC Tools](https://github.com/agreatfool/grpc_tools_node_protoc_ts)
