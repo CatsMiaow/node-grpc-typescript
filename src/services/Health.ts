@@ -19,14 +19,15 @@ class Health implements IHealthServer {
 
   // public check: handleUnaryCall<HealthCheckRequest, HealthCheckResponse> = (call, callback) => {}
   public check(call: ServerUnaryCall<HealthCheckRequest, HealthCheckResponse>, callback: sendUnaryData<HealthCheckResponse>): void {
-    const service: string = call.request.getService();
+    const service = call.request.getService();
 
-    if (!healthStatus.has(service)) {
+    const serviceStatus = healthStatus.get(service);
+    if (!serviceStatus) {
       return callback(new ServiceError(status.NOT_FOUND, 'NotFoundService'), null);
     }
 
     const res: HealthCheckResponse = new HealthCheckResponse();
-    res.setStatus(<HealthCheckResponse.ServingStatus>healthStatus.get(service));
+    res.setStatus(serviceStatus);
 
     callback(null, res);
   }

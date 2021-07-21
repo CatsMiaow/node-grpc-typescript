@@ -8,7 +8,7 @@ import { logger } from './utils';
 
 // https://github.com/grpc/grpc/blob/master/doc/keepalive.md
 // https://cloud.ibm.com/docs/services/blockchain?topic=blockchain-best-practices-app#best-practices-app-connections
-const client: GreeterClient = new GreeterClient('localhost:50051', credentials.createInsecure(), {
+const client = new GreeterClient('localhost:50051', credentials.createInsecure(), {
   'grpc.keepalive_time_ms': 120000,
   'grpc.http2.min_time_between_pings_ms': 120000,
   'grpc.keepalive_timeout_ms': 20000,
@@ -22,13 +22,13 @@ if (process.argv.length >= 3) {
   [,,argv] = process.argv;
 }
 
-const param: HelloRequest = new HelloRequest();
+const param = new HelloRequest();
 param.setName(argv);
 param.setParamStruct(Struct.fromJavaScript({ foo: 'bar', bar: 'foo' }));
 param.setParamListValue(ListValue.fromJavaScript([{ foo: 'bar' }, { bar: 'foo' }]));
 param.setParamValue(Value.fromJavaScript('Any Value'));
 
-const metadata: Metadata = new Metadata();
+const metadata = new Metadata();
 metadata.add('foo', 'bar1');
 metadata.add('foo', 'bar2');
 
@@ -37,7 +37,7 @@ async function example(): Promise<void> {
    * rpc sayHello with callback
    * https://github.com/grpc/grpc-node/issues/54
    */
-  client.sayHello(param, (err: ServiceError | null, res: HelloResponse) => {
+  client.sayHello(param, (err: ServiceError | null, res) => {
     if (err) {
       return logger.error('sayBasic:', err.message);
     }
@@ -48,11 +48,11 @@ async function example(): Promise<void> {
   /**
    * rpc sayHello with Promise
    */
-  const sayHello: HelloResponse = await clientService.sayHello(param);
+  const sayHello = await clientService.sayHello(param);
   logger.info('sayHello:', sayHello.getMessage());
-  logger.info('sayHelloStruct:', (<Struct>sayHello.getParamStruct()).toJavaScript());
-  logger.info('sayHelloListValue:', (<ListValue>sayHello.getParamListValue()).toJavaScript());
-  const value: Value | undefined = sayHello.getParamValue();
+  logger.info('sayHelloStruct:', sayHello.getParamStruct()?.toJavaScript());
+  logger.info('sayHelloListValue:', sayHello.getParamListValue()?.toJavaScript());
+  const value = sayHello.getParamValue();
   if (value) {
     logger.info('sayHelloValue:', value.toJavaScript());
   }
@@ -60,7 +60,7 @@ async function example(): Promise<void> {
   /**
    * rpc sayHello with Metadata
    */
-  const sayHelloMetadata: HelloResponse = await clientService.sayHello(param, metadata);
+  const sayHelloMetadata = await clientService.sayHello(param, metadata);
   logger.info('sayHelloMetadata:', sayHelloMetadata.getMessage());
 }
 
@@ -68,7 +68,7 @@ function exampleStream(): void {
   /**
    * rpc sayHelloStreamRequest
    */
-  const streamRequest: ClientWritableStream<HelloRequest> = client.sayHelloStreamRequest((err: ServiceError | null, res: HelloResponse) => {
+  const streamRequest: ClientWritableStream<HelloRequest> = client.sayHelloStreamRequest((err: ServiceError | null, res) => {
     if (err) {
       return logger.error('sayHelloStreamRequest:', err);
     }
@@ -77,7 +77,7 @@ function exampleStream(): void {
   });
 
   for (let i = 1; i <= 10; i += 1) {
-    const req: HelloRequest = new HelloRequest();
+    const req = new HelloRequest();
     req.setName(`${argv}.${i}`);
     streamRequest.write(req);
   }
@@ -107,7 +107,7 @@ function exampleStream(): void {
     .on('error', (err: Error) => logger.error('sayHelloStream:', err));
 
   for (let i = 1; i <= 10; i += 1) {
-    const req: HelloRequest = new HelloRequest();
+    const req = new HelloRequest();
     req.setName(`${argv}.${i}`);
     stream.write(req);
   }

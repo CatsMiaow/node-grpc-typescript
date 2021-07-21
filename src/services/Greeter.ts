@@ -1,7 +1,7 @@
 import { sendUnaryData, ServerDuplexStream, ServerReadableStream, ServerUnaryCall, ServerWritableStream,
-  MetadataValue, status, UntypedHandleCall } from '@grpc/grpc-js';
+  status, UntypedHandleCall } from '@grpc/grpc-js';
 import { randomBytes } from 'crypto';
-import { ListValue, Struct, Value } from 'google-protobuf/google/protobuf/struct_pb';
+import { Struct } from 'google-protobuf/google/protobuf/struct_pb';
 
 import { GreeterService, IGreeterServer } from '../../models/helloworld_grpc_pb';
 import { HelloRequest, HelloResponse } from '../../models/helloworld_pb';
@@ -22,8 +22,8 @@ class Greeter implements IGreeterServer {
   public sayHello(call: ServerUnaryCall<HelloRequest, HelloResponse>, callback: sendUnaryData<HelloResponse>): void {
     logger.info('sayHello', Date.now());
 
-    const res: HelloResponse = new HelloResponse();
-    const name: string = call.request.getName();
+    const res = new HelloResponse();
+    const name = call.request.getName();
     logger.info('sayHelloName:', name);
 
     if (name === 'error') {
@@ -31,14 +31,14 @@ class Greeter implements IGreeterServer {
       return callback(new ServiceError(status.INVALID_ARGUMENT, 'InvalidValue'), null);
     }
 
-    const metadataValue: MetadataValue[] = call.metadata.get('foo');
+    const metadataValue = call.metadata.get('foo');
     logger.info('sayHelloMetadata:', metadataValue);
 
     res.setMessage(`Hello ${metadataValue.length > 0 ? metadataValue : name}`);
 
-    const paramStruct: Struct | undefined = call.request.getParamStruct();
-    const paramListValue: ListValue | undefined = call.request.getParamListValue();
-    const paramValue: Value | undefined = call.request.getParamValue();
+    const paramStruct = call.request.getParamStruct();
+    const paramListValue = call.request.getParamListValue();
+    const paramValue = call.request.getParamValue();
     logger.info('sayHelloStruct:', paramStruct?.toJavaScript());
     logger.info('sayHelloListValue:', paramListValue?.toJavaScript());
     logger.info('sayHelloValue:', paramValue?.toJavaScript());
@@ -60,7 +60,7 @@ class Greeter implements IGreeterServer {
     call.on('data', (req: HelloRequest) => {
       data.push(`${req.getName()} - ${randomBytes(5).toString('hex')}`);
     }).on('end', () => {
-      const res: HelloResponse = new HelloResponse();
+      const res = new HelloResponse();
       res.setMessage(data.join('\n'));
 
       callback(null, res);
@@ -72,10 +72,10 @@ class Greeter implements IGreeterServer {
   public sayHelloStreamResponse(call: ServerWritableStream<HelloRequest, HelloResponse>): void {
     logger.info('sayHelloStreamResponse:', call.request.toObject());
 
-    const name: string = call.request.getName();
+    const name = call.request.getName();
 
     for (const text of Array(10).fill('').map(() => randomBytes(5).toString('hex'))) {
-      const res: HelloResponse = new HelloResponse();
+      const res = new HelloResponse();
       res.setMessage(`${name} - ${text}`);
       call.write(res);
     }
@@ -86,7 +86,7 @@ class Greeter implements IGreeterServer {
     logger.info('sayHelloStream:', call.getPeer());
 
     call.on('data', (req: HelloRequest) => {
-      const res: HelloResponse = new HelloResponse();
+      const res = new HelloResponse();
       res.setMessage(`${req.getName()} - ${randomBytes(5).toString('hex')}`);
       call.write(res);
     }).on('end', () => {
