@@ -37,7 +37,7 @@ async function example(): Promise<void> {
    * rpc sayHello with callback
    * https://github.com/grpc/grpc-node/issues/54
    */
-  client.sayHello(param, (err: ServiceError | null, res) => {
+  client.sayHello(param, (err: ServiceError | null, res: HelloResponse) => {
     if (err) {
       return logger.error('sayBasic:', err.message);
     }
@@ -68,7 +68,7 @@ function exampleStream(): void {
   /**
    * rpc sayHelloStreamRequest
    */
-  const streamRequest: ClientWritableStream<HelloRequest> = client.sayHelloStreamRequest((err: ServiceError | null, res) => {
+  const streamRequest: ClientWritableStream<HelloRequest> = client.sayHelloStreamRequest((err: ServiceError | null, res: HelloResponse) => {
     if (err) {
       return logger.error('sayHelloStreamRequest:', err);
     }
