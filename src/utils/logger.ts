@@ -10,7 +10,7 @@ export class Logger {
   private readonly rootDir: string = dirname((<NodeModule>require.main).filename);
 
   constructor() {
-    if (process.env.pm_id) {
+    if (process.env['pm_id']) {
       this.rootDir = this.rootDir.replace('/dist', '/src');
     }
   }
