@@ -7,7 +7,7 @@ import { clientService } from './clientService';
 import { logger } from './utils';
 
 // https://github.com/grpc/grpc/blob/master/doc/keepalive.md
-// https://cloud.ibm.com/docs/services/blockchain?topic=blockchain-best-practices-app#best-practices-app-connections
+// https://cloud.ibm.com/docs/blockchain-multicloud?topic=blockchain-multicloud-best-practices-app#best-practices-app-connections
 const client = new GreeterClient('localhost:50051', credentials.createInsecure(), {
   'grpc.keepalive_time_ms': 120000,
   'grpc.http2.min_time_between_pings_ms': 120000,
