@@ -1,9 +1,8 @@
-import { ClientDuplexStream, ClientReadableStream, ClientWritableStream, credentials, Metadata, ServiceError } from '@grpc/grpc-js';
-import { ListValue, Struct, Value } from 'google-protobuf/google/protobuf/struct_pb';
+import 'source-map-support/register';
+import { credentials, Metadata, ServiceError } from '@grpc/grpc-js';
 
-import { GreeterClient } from '../models/helloworld_grpc_pb';
-import { HelloRequest, HelloResponse } from '../models/helloworld_pb';
 import { clientService } from './clientService';
+import { GreeterClient, HelloRequest, HelloResponse } from './models/helloworld';
 import { logger } from './utils';
 
 // https://github.com/grpc/grpc/blob/master/doc/keepalive.md
@@ -22,11 +21,12 @@ if (process.argv.length >= 3) {
   [,,argv] = process.argv;
 }
 
-const param = new HelloRequest();
-param.setName(argv);
-param.setParamStruct(Struct.fromJavaScript({ foo: 'bar', bar: 'foo' }));
-param.setParamListValue(ListValue.fromJavaScript([{ foo: 'bar' }, { bar: 'foo' }]));
-param.setParamValue(Value.fromJavaScript('Any Value'));
+const param: HelloRequest = {
+  name: argv,
+  paramStruct: { foo: 'bar', bar: 'foo' },
+  paramListValue: [{ foo: 'bar' }, { bar: 'foo' }],
+  paramValue: 'Any Value',
+};
 
 const metadata = new Metadata();
 metadata.add('foo', 'bar1');
@@ -42,55 +42,52 @@ async function example(): Promise<void> {
       return logger.error('sayBasic:', err.message);
     }
 
-    logger.info('sayBasic:', res.getMessage());
+    logger.info('sayBasic:', res.message);
   });
 
   /**
    * rpc sayHello with Promise
    */
   const sayHello = await clientService.sayHello(param);
-  logger.info('sayHello:', sayHello.getMessage());
-  logger.info('sayHelloStruct:', sayHello.getParamStruct()?.toJavaScript());
-  logger.info('sayHelloListValue:', sayHello.getParamListValue()?.toJavaScript());
-  const value = sayHello.getParamValue();
-  if (value) {
-    logger.info('sayHelloValue:', value.toJavaScript());
-  }
+  logger.info('sayHello:', sayHello.message);
+  logger.info('sayHelloStruct:', sayHello.paramStruct);
+  logger.info('sayHelloListValue:', sayHello.paramListValue);
+  logger.info('sayHelloValue:', sayHello.paramValue);
 
   /**
    * rpc sayHello with Metadata
    */
   const sayHelloMetadata = await clientService.sayHello(param, metadata);
-  logger.info('sayHelloMetadata:', sayHelloMetadata.getMessage());
+  logger.info('sayHelloMetadata:', sayHelloMetadata.message);
 }
 
 function exampleStream(): void {
   /**
    * rpc sayHelloStreamRequest
    */
-  const streamRequest: ClientWritableStream<HelloRequest> = client.sayHelloStreamRequest((err: ServiceError | null, res: HelloResponse) => {
+  const streamRequest = client.sayHelloStreamRequest((err: ServiceError | null, res: HelloResponse) => {
     if (err) {
       return logger.error('sayHelloStreamRequest:', err);
     }
 
-    logger.info('sayHelloStreamRequest:', res.getMessage());
+    logger.info('sayHelloStreamRequest:', res.message);
   });
 
   for (let i = 1; i <= 10; i += 1) {
-    const req = new HelloRequest();
-    req.setName(`${argv}.${i}`);
-    streamRequest.write(req);
+    streamRequest.write({
+      name: `${argv}.${i}`,
+    });
   }
   streamRequest.end();
 
   /**
    * rpc sayHelloStreamResponse
    */
-  const streamResponse: ClientReadableStream<HelloResponse> = client.sayHelloStreamResponse(param);
+  const streamResponse = client.sayHelloStreamResponse(param);
 
   const data: string[] = [];
   streamResponse.on('data', (res: HelloResponse) => {
-    data.push(res.getMessage());
+    data.push(res.message);
   }).on('end', () => {
     logger.info('sayHelloStreamResponse:', data.join('\n'));
   }).on('error', (err: Error) => {
@@ -100,16 +97,16 @@ function exampleStream(): void {
   /**
    * rpc sayHelloStream
    */
-  const stream: ClientDuplexStream<HelloRequest, HelloResponse> = client.sayHelloStream();
+  const stream = client.sayHelloStream();
   stream
-    .on('data', (res: HelloResponse) => logger.info('sayHelloStream:', res.getMessage()))
+    .on('data', (res: HelloResponse) => logger.info('sayHelloStream:', res.message))
     .on('end', () => logger.info('sayHelloStream: End'))
     .on('error', (err: Error) => logger.error('sayHelloStream:', err));
 
   for (let i = 1; i <= 10; i += 1) {
-    const req = new HelloRequest();
-    req.setName(`${argv}.${i}`);
-    stream.write(req);
+    stream.write({
+      name: `${argv}.${i}`,
+    });
   }
   stream.end();
 }

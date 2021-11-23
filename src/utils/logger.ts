@@ -10,9 +10,7 @@ export class Logger {
   private readonly rootDir: string = dirname((<NodeModule>require.main).filename);
 
   constructor() {
-    if (process.env['pm_id']) {
-      this.rootDir = this.rootDir.replace('/dist', '/src');
-    }
+    this.rootDir = this.rootDir.replace('/dist', '/src');
   }
 
   public info(...args: Parameter): void {
@@ -31,15 +29,15 @@ export class Logger {
   }
 
   private trace(): string {
-    const lines: string[] = (<string> new Error().stack).split('\n').slice(1);
-    const lineMatch: RegExpMatchArray | null = /at (?:(.+)\s+)?\(?(?:(.+?):(\d+):(\d+)|([^)]+))\)?/.exec(lines[2]);
+    const lines = (<string> new Error().stack).split('\n').slice(1);
+    const lineMatch = /at (?:(.+)\s+)?\(?(?:(.+?):(\d+):(\d+)|([^)]+))\)?/.exec(lines[2]);
 
     if (!lineMatch || lineMatch[2] === null || lineMatch[3] === null) {
       return '';
     }
 
-    const fileName: string = lineMatch[2].split(this.rootDir)[1];
-    const line: string = lineMatch[3];
+    const fileName = lineMatch[2].split(this.rootDir)[1];
+    const line = lineMatch[3];
 
     return `${fileName}:${line}`;
   }

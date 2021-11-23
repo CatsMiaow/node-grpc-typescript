@@ -1,19 +1,15 @@
 import { sendUnaryData, ServerDuplexStream, ServerReadableStream, ServerUnaryCall, ServerWritableStream,
   status, UntypedHandleCall } from '@grpc/grpc-js';
 import { randomBytes } from 'crypto';
-import { Struct } from 'google-protobuf/google/protobuf/struct_pb';
 
-import { GreeterService, IGreeterServer } from '../../models/helloworld_grpc_pb';
-import { HelloRequest, HelloResponse } from '../../models/helloworld_pb';
+import { GreeterServer, GreeterService, HelloRequest, HelloResponse } from '../models/helloworld';
 import { logger, ServiceError } from '../utils';
 
 /**
  * package helloworld
  * service Greeter
  */
-class Greeter implements IGreeterServer {
-  // Argument of type 'Greeter' is not assignable to parameter of type 'UntypedServiceImplementation'.
-  // Index signature is missing in type 'Greeter'.ts(2345)
+class Greeter implements GreeterServer {
   [method: string]: UntypedHandleCall;
 
   /**
@@ -22,8 +18,8 @@ class Greeter implements IGreeterServer {
   public sayHello(call: ServerUnaryCall<HelloRequest, HelloResponse>, callback: sendUnaryData<HelloResponse>): void {
     logger.info('sayHello', Date.now());
 
-    const res = new HelloResponse();
-    const name = call.request.getName();
+    const res: Partial<HelloResponse> = {};
+    const { name } = call.request;
     logger.info('sayHelloName:', name);
 
     if (name === 'error') {
@@ -34,23 +30,21 @@ class Greeter implements IGreeterServer {
     const metadataValue = call.metadata.get('foo');
     logger.info('sayHelloMetadata:', metadataValue);
 
-    res.setMessage(`Hello ${metadataValue.length > 0 ? metadataValue : name}`);
+    res.message = metadataValue.length > 0
+      ? `foo is ${metadataValue}`
+      : `hello ${name}`;
 
-    const paramStruct = call.request.getParamStruct();
-    const paramListValue = call.request.getParamListValue();
-    const paramValue = call.request.getParamValue();
-    logger.info('sayHelloStruct:', paramStruct?.toJavaScript());
-    logger.info('sayHelloListValue:', paramListValue?.toJavaScript());
-    logger.info('sayHelloValue:', paramValue?.toJavaScript());
+    const { paramStruct, paramListValue } = call.request;
+    const paramValue = <unknown>call.request.paramValue;
+    logger.info('sayHelloStruct:', paramStruct);
+    logger.info('sayHelloListValue:', paramListValue);
+    logger.info('sayHelloValue:', paramValue);
 
-    if (paramStruct) {
-      // = res.setParamStruct(paramStruct);
-      res.setParamStruct(Struct.fromJavaScript(paramStruct.toJavaScript()));
-    }
-    res.setParamListValue(paramListValue);
-    res.setParamValue(paramValue);
+    res.paramStruct = paramStruct;
+    res.paramListValue = paramListValue;
+    res.paramValue = paramValue;
 
-    callback(null, res);
+    callback(null, HelloResponse.fromJSON(res));
   }
 
   public sayHelloStreamRequest(call: ServerReadableStream<HelloRequest, HelloResponse>, callback: sendUnaryData<HelloResponse>): void {
@@ -58,26 +52,25 @@ class Greeter implements IGreeterServer {
 
     const data: string[] = [];
     call.on('data', (req: HelloRequest) => {
-      data.push(`${req.getName()} - ${randomBytes(5).toString('hex')}`);
+      data.push(`${req.name} - ${randomBytes(5).toString('hex')}`);
     }).on('end', () => {
-      const res = new HelloResponse();
-      res.setMessage(data.join('\n'));
-
-      callback(null, res);
+      callback(null, HelloResponse.fromJSON({
+        message: data.join('\n'),
+      }));
     }).on('error', (err: Error) => {
       callback(new ServiceError(status.INTERNAL, err.message), null);
     });
   }
 
   public sayHelloStreamResponse(call: ServerWritableStream<HelloRequest, HelloResponse>): void {
-    logger.info('sayHelloStreamResponse:', call.request.toObject());
+    logger.info('sayHelloStreamResponse:', call.request);
 
-    const name = call.request.getName();
+    const { name } = call.request;
 
     for (const text of Array(10).fill('').map(() => randomBytes(5).toString('hex'))) {
-      const res = new HelloResponse();
-      res.setMessage(`${name} - ${text}`);
-      call.write(res);
+      call.write(HelloResponse.fromJSON({
+        message: `${name} - ${text}`,
+      }));
     }
     call.end();
   }
@@ -86,9 +79,9 @@ class Greeter implements IGreeterServer {
     logger.info('sayHelloStream:', call.getPeer());
 
     call.on('data', (req: HelloRequest) => {
-      const res = new HelloResponse();
-      res.setMessage(`${req.getName()} - ${randomBytes(5).toString('hex')}`);
-      call.write(res);
+      call.write(HelloResponse.fromJSON({
+        message: `${req.name} - ${randomBytes(5).toString('hex')}`,
+      }));
     }).on('end', () => {
       call.end();
     }).on('error', (err: Error) => {

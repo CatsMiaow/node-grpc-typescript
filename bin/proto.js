@@ -6,21 +6,22 @@ const rimraf = require('rimraf');
 process.env.PATH += (path.delimiter + path.join(process.cwd(), 'node_modules', '.bin'));
 
 const PROTO_DIR = path.join(__dirname, '../protos');
-const MODEL_DIR = path.join(__dirname, '../models');
-const PROTOC_GEN_TS_PATH = path.join(__dirname, '../node_modules/.bin/protoc-gen-ts');
+const MODEL_DIR = path.join(__dirname, '../src/models');
+const PROTOC_PATH = path.join(__dirname, "../node_modules/grpc-tools/bin/protoc");
+const PLUGIN_PATH = path.join(__dirname, "../node_modules/.bin/protoc-gen-ts_proto");
 
-rimraf.sync(`${MODEL_DIR}/*`);
+rimraf.sync(`${MODEL_DIR}/*`, {
+  glob: { ignore: `${MODEL_DIR}/tsconfig.json` },
+});
 
 const protoConfig = [
-  `--plugin="protoc-gen-ts=${PROTOC_GEN_TS_PATH}" `,
-  `--grpc_out="grpc_js:${MODEL_DIR}" `,
-  `--js_out="import_style=commonjs,binary:${MODEL_DIR}" `,
-  `--ts_out="grpc_js:${MODEL_DIR}" `,
-  `--proto_path ${PROTO_DIR} ${PROTO_DIR}/*.proto`
+  `--plugin=${PLUGIN_PATH}`,
+
+  // https://github.com/stephenh/ts-proto/blob/main/README.markdown
+  "--ts_proto_opt=outputServices=grpc-js,env=node,useOptionals=true,exportCommonSymbols=false,esModuleInterop=true",
+
+  `--ts_proto_out=${MODEL_DIR}`,
+  `--proto_path ${PROTO_DIR} ${PROTO_DIR}/*.proto`,
 ];
-
-// https://github.com/agreatfool/grpc_tools_node_protoc_ts/tree/master/examples
-shell.exec(`grpc_tools_node_protoc ${protoConfig.join(' ')}`);
-
-// https://github.com/dcodeIO/protobuf.js#command-line
-// https://github.com/dcodeIO/protobuf.js#command-line-api
+// https://github.com/stephenh/ts-proto#usage
+shell.exec(`${PROTOC_PATH} ${protoConfig.join(" ")}`, (code, stdout, stderr) => console.log(code, stdout, stderr));

@@ -26,5 +26,8 @@
     "skipLibCheck": true
   },
   "include": ["typings/global.d.ts", "src/**/*"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "src/models"],
+  "references": [
+    { "path": "src/models" }
+  ]
 }

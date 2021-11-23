@@ -1,3 +1,4 @@
 # protoc output folder
 *
 !.gitignore
+!tsconfig.json

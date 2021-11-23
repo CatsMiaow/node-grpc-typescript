@@ -23,6 +23,7 @@
     "object-curly-newline": "off",
 
     "import/prefer-default-export": "off",
+    "import/order": ["error", { "groups": [["builtin", "external", "internal"]], "newlines-between": "always", "alphabetize": { "order": "asc", "caseInsensitive": true } }],
 
     "@typescript-eslint/no-floating-promises": "off",
     "@typescript-eslint/no-inferrable-types": "off",
