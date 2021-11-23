@@ -3,7 +3,7 @@
 Node.js gRPC structure with [google.protobuf](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf) for TypeScript example
 
 - This example uses [ts-proto](https://github.com/stephenh/ts-proto) as the TypeScript plugin.
-- For an example using the [grpc_tools_node_protoc_ts](https://github.com/agreatfool/grpc_tools_node_protoc_ts) plugin, see the [grpc_tools_node_protoc_ts](https://github.com/CatsMiaow/node-grpc-typescript/tree/grpc_tools_node_protoc_ts) branch source.
+- For an example using the [grpc_tools_node_protoc_ts](https://github.com/agreatfool/grpc_tools_node_protoc_ts) plugin, see the following [branch](https://github.com/CatsMiaow/node-grpc-typescript/tree/grpc_tools_node_protoc_ts) source.
 
 ## Installation
 
