@@ -30,7 +30,6 @@
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-sonarjs": "^0.10.0",
     "grpc-tools": "^1.11.2",
-    "protobufjs": "^6.11.2",
     "rimraf": "^3.0.2",
     "shelljs": "^0.8.4",
     "ts-proto": "^1.88.0",
