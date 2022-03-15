@@ -18,10 +18,10 @@ const protoConfig = [
   `--plugin=${PLUGIN_PATH}`,
 
   // https://github.com/stephenh/ts-proto/blob/main/README.markdown
-  "--ts_proto_opt=outputServices=grpc-js,env=node,useOptionals=true,exportCommonSymbols=false,esModuleInterop=true",
+  "--ts_proto_opt=outputServices=grpc-js,env=node,useOptionals=messages,exportCommonSymbols=false,esModuleInterop=true",
 
   `--ts_proto_out=${MODEL_DIR}`,
   `--proto_path ${PROTO_DIR} ${PROTO_DIR}/*.proto`,
 ];
 // https://github.com/stephenh/ts-proto#usage
-shell.exec(`${PROTOC_PATH} ${protoConfig.join(" ")}`, (code, stdout, stderr) => console.log(code, stdout, stderr));
+shell.exec(`${PROTOC_PATH} ${protoConfig.join(" ")}`, (code, stdout, stderr) => console.log('Proto', code, stdout, stderr));
