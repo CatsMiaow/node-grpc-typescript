@@ -14,16 +14,14 @@ npm i
 ## Build
 
 ```sh
-npm run build:proto # *.proto
-npm run build # *.ts
+npm run build # *.proto, *.ts
+npm run lint
 ```
 
 ## Server Start
 
 ```sh
-node dist/server
-# OR
-npm start
+npm start #= node dist/server
 ```
 
 ## Client Test
