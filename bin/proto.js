@@ -1,9 +1,6 @@
 const path = require('path');
-const shell = require('shelljs');
+const { execSync } = require('child_process');
 const rimraf = require('rimraf');
-
-// https://github.com/shelljs/shelljs/issues/469
-process.env.PATH += (path.delimiter + path.join(process.cwd(), 'node_modules', '.bin'));
 
 const PROTO_DIR = path.join(__dirname, '../protos');
 const MODEL_DIR = path.join(__dirname, '../src/models');
@@ -23,5 +20,7 @@ const protoConfig = [
   `--ts_proto_out=${MODEL_DIR}`,
   `--proto_path ${PROTO_DIR} ${PROTO_DIR}/*.proto`,
 ];
+
 // https://github.com/stephenh/ts-proto#usage
-shell.exec(`${PROTOC_PATH} ${protoConfig.join(" ")}`, (code, stdout, stderr) => console.log('Proto', code, stdout, stderr));
+execSync(`${PROTOC_PATH} ${protoConfig.join(" ")}`);
+console.log(`> Proto models created: ${MODEL_DIR}`);
