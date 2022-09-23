@@ -15,22 +15,22 @@
     "health": "node dist/health"
   },
   "dependencies": {
-    "@grpc/grpc-js": "^1.6.7",
+    "@grpc/grpc-js": "^1.7.1",
     "source-map-support": "^0.5.21"
   },
   "devDependencies": {
-    "@types/node": "^16.11.45",
-    "@typescript-eslint/eslint-plugin": "^5.30.7",
-    "@typescript-eslint/parser": "^5.30.7",
-    "eslint": "^8.20.0",
+    "@types/node": "^16.11.59",
+    "@typescript-eslint/eslint-plugin": "^5.38.0",
+    "@typescript-eslint/parser": "^5.38.0",
+    "eslint": "^8.23.1",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-sonarjs": "^0.13.0",
+    "eslint-plugin-sonarjs": "^0.15.0",
     "grpc-tools": "^1.11.2",
     "rimraf": "^3.0.2",
-    "ts-proto": "^1.118.0",
-    "typescript": "^4.7.4"
+    "ts-proto": "^1.126.1",
+    "typescript": "^4.8.3"
   },
   "repository": {
     "type": "git",
