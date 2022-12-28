@@ -8,7 +8,7 @@ Node.js gRPC structure with [google.protobuf](https://developers.google.com/prot
 ## Installation
 
 ```sh
-npm i
+npm ci
 ```
 
 ## Build
