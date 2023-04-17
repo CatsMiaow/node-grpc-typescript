@@ -25,7 +25,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true
   },
-  "include": ["typings/global.d.ts", "src/**/*"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "src/models"],
   "references": [
     { "path": "src/models" }
