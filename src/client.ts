@@ -1,7 +1,7 @@
 import 'source-map-support/register';
 import { credentials, Metadata, ServiceError } from '@grpc/grpc-js';
 
-import { clientService } from './clientService';
+import { clientService } from './client.service';
 import { GreeterClient, HelloRequest, HelloResponse } from './models/helloworld';
 import { logger } from './utils';
 

@@ -3,9 +3,6 @@ import { dirname } from 'path';
 
 export type Parameter = [unknown?, ...unknown[]];
 
-/**
- * Logger Class
- */
 export class Logger {
   private readonly rootDir: string = dirname((<NodeModule>require.main).filename);
 

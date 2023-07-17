@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {},
-    "target": "ES2019",
+    "target": "ES2021",
     "outDir": "dist",
     "module": "commonjs",
     "moduleResolution": "node",

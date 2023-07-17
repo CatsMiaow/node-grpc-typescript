@@ -11,12 +11,18 @@ rimrafSync(`${MODEL_DIR}/*`, {
   glob: { ignore: `${MODEL_DIR}/tsconfig.json` },
 });
 
+// https://github.com/stephenh/ts-proto/blob/main/README.markdown#supported-options
+const tsProtoOpt = [
+  'outputServices=grpc-js',
+  'env=node',
+  'useOptionals=messages',
+  'exportCommonSymbols=false',
+  'esModuleInterop=true',
+];
+
 const protoConfig = [
   `--plugin=${PLUGIN_PATH}`,
-
-  // https://github.com/stephenh/ts-proto/blob/main/README.markdown
-  "--ts_proto_opt=outputServices=grpc-js,env=node,useOptionals=messages,exportCommonSymbols=false,esModuleInterop=true",
-
+  `--ts_proto_opt=${tsProtoOpt.join(',')}`,
   `--ts_proto_out=${MODEL_DIR}`,
   `--proto_path ${PROTO_DIR} ${PROTO_DIR}/*.proto`,
 ];

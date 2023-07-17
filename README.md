@@ -14,7 +14,8 @@ npm ci
 ## Build
 
 ```sh
-npm run build # *.proto, *.ts
+# exports to *.proto to *.ts
+npm run build
 npm run lint
 ```
 
@@ -25,6 +26,8 @@ npm start #= node dist/server
 ```
 
 ## Client Test
+
+Start the server before testing client commands.
 
 ```sh
 # 1. Request
