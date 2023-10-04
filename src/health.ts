@@ -9,7 +9,7 @@ logger.info('gRPC:HealthClient', new Date().toLocaleString());
 
 let argv = 'helloworld.Greeter';
 if (process.argv.length >= 3) {
-  [,,argv] = process.argv;
+  [, , argv] = process.argv;
 }
 
 const param: HealthCheckRequest = {
@@ -18,12 +18,14 @@ const param: HealthCheckRequest = {
 
 health.check(param, (err: ServiceError | null, res: HealthCheckResponse) => {
   if (err) {
-    return logger.error('healthCheck:', err);
+    logger.error('healthCheck:', err);
+    return;
   }
 
   const { status } = res;
   if (status !== HealthCheckResponse_ServingStatus.SERVING) {
-    return logger.error('healthCheck:', status);
+    logger.error('healthCheck:', status);
+    return;
   }
 
   logger.info('healthCheck:', status);

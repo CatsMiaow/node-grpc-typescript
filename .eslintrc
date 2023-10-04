@@ -6,14 +6,15 @@
     "project": "tsconfig.json",
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint", "sonarjs"],
+  "plugins": ["@typescript-eslint", "sonarjs", "prettier"],
   "extends": [
     "eslint:recommended",
     "airbnb-base",
     "airbnb-typescript/base",
     "plugin:sonarjs/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+    "plugin:@typescript-eslint/strict-type-checked",
+    "plugin:@typescript-eslint/stylistic-type-checked",
+    "plugin:prettier/recommended"
   ],
   "rules": {
     "class-methods-use-this": "off",
@@ -25,6 +26,7 @@
     "import/prefer-default-export": "off",
     "import/order": ["error", { "groups": [["builtin", "external", "internal"]], "newlines-between": "always", "alphabetize": { "order": "asc", "caseInsensitive": true } }],
 
+    "@typescript-eslint/consistent-type-assertions": ["error", { "assertionStyle": "angle-bracket" }],
     "@typescript-eslint/no-floating-promises": "off",
     "@typescript-eslint/no-inferrable-types": "off",
     "@typescript-eslint/restrict-template-expressions": "off",

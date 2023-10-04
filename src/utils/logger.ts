@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable no-console, @typescript-eslint/no-unnecessary-condition, @typescript-eslint/prefer-optional-chain, @typescript-eslint/non-nullable-type-assertion-style */
 import { dirname } from 'path';
 
 export type Parameter = [unknown?, ...unknown[]];
@@ -26,7 +26,7 @@ export class Logger {
   }
 
   private trace(): string {
-    const lines = (<string> new Error().stack).split('\n').slice(1);
+    const lines = (<string>new Error().stack).split('\n').slice(1);
     const lineMatch = /at (?:(.+)\s+)?\(?(?:(.+?):(\d+):(\d+)|([^)]+))\)?/.exec(lines[2]);
 
     if (!lineMatch || lineMatch[2] === null || lineMatch[3] === null) {

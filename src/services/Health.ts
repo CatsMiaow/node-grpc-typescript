@@ -1,40 +1,19 @@
-import { sendUnaryData, ServerUnaryCall, status, UntypedHandleCall } from '@grpc/grpc-js';
+import type { Server } from '@grpc/grpc-js';
+import { HealthImplementation, ServingStatus, ServingStatusMap } from 'grpc-health-check';
 
-import { HealthCheckResponse, HealthCheckResponse_ServingStatus, HealthCheckRequest, HealthService, HealthServer } from '../models/health';
-import { logger, ServiceError } from '../utils';
+export class Health {
+  private servingStatus: ServingStatusMap = {
+    '': 'NOT_SERVING',
+    'helloworld.Greeter': 'NOT_SERVING',
+  };
 
-const ServingStatus = HealthCheckResponse_ServingStatus;
-const healthStatus: Map<string, HealthCheckResponse_ServingStatus> = new Map(Object.entries({
-  '': ServingStatus.SERVING,
-  'helloworld.Greeter': ServingStatus.SERVING,
-}));
+  private healthImpl = new HealthImplementation(this.servingStatus);
 
-/**
- * gRPC Health Check
- * https://github.com/grpc/grpc-node/tree/master/packages/grpc-health-check
- */
-class Health implements HealthServer {
-  [method: string]: UntypedHandleCall;
+  constructor(server: Server) {
+    this.healthImpl.addToServer(server);
+  }
 
-  // public check: handleUnaryCall<HealthCheckRequest, HealthCheckResponse> = (call, callback) => {}
-  public check(call: ServerUnaryCall<HealthCheckRequest, HealthCheckResponse>, callback: sendUnaryData<HealthCheckResponse>): void {
-    const { service } = call.request;
-    logger.info('healthCheck', service);
-
-    const serviceStatus = healthStatus.get(service);
-    if (!serviceStatus) {
-      return callback(new ServiceError(status.NOT_FOUND, 'NotFoundService'), null);
-    }
-
-    callback(null, {
-      status: serviceStatus,
-    });
+  public setStatus(service: string, status: ServingStatus): void {
+    this.healthImpl.setStatus(service, status);
   }
 }
-
-export {
-  Health,
-  HealthService,
-  healthStatus,
-  ServingStatus,
-};

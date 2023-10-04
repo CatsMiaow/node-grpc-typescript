@@ -18,7 +18,7 @@ logger.info('gRPC:GreeterClient', new Date().toLocaleString());
 
 let argv = 'world';
 if (process.argv.length >= 3) {
-  [,,argv] = process.argv;
+  [, , argv] = process.argv;
 }
 
 const param: HelloRequest = {
@@ -39,7 +39,8 @@ async function example(): Promise<void> {
    */
   client.sayHello(param, (err: ServiceError | null, res: HelloResponse) => {
     if (err) {
-      return logger.error('sayBasic:', err.message);
+      logger.error('sayBasic:', err.message);
+      return;
     }
 
     logger.info('sayBasic:', res.message);
@@ -67,7 +68,8 @@ function exampleStream(): void {
    */
   const streamRequest = client.sayHelloStreamRequest((err: ServiceError | null, res: HelloResponse) => {
     if (err) {
-      return logger.error('sayHelloStreamRequest:', err);
+      logger.error('sayHelloStreamRequest:', err);
+      return;
     }
 
     logger.info('sayHelloStreamRequest:', res.message);
@@ -86,22 +88,31 @@ function exampleStream(): void {
   const streamResponse = client.sayHelloStreamResponse(param);
 
   const data: string[] = [];
-  streamResponse.on('data', (res: HelloResponse) => {
-    data.push(res.message);
-  }).on('end', () => {
-    logger.info('sayHelloStreamResponse:', data.join('\n'));
-  }).on('error', (err: Error) => {
-    logger.error('sayHelloStreamResponse:', err);
-  });
+  streamResponse
+    .on('data', (res: HelloResponse) => {
+      data.push(res.message);
+    })
+    .on('end', () => {
+      logger.info('sayHelloStreamResponse:', data.join('\n'));
+    })
+    .on('error', (err: Error) => {
+      logger.error('sayHelloStreamResponse:', err);
+    });
 
   /**
    * rpc sayHelloStream
    */
   const stream = client.sayHelloStream();
   stream
-    .on('data', (res: HelloResponse) => logger.info('sayHelloStream:', res.message))
-    .on('end', () => logger.info('sayHelloStream: End'))
-    .on('error', (err: Error) => logger.error('sayHelloStream:', err));
+    .on('data', (res: HelloResponse) => {
+      logger.info('sayHelloStream:', res.message);
+    })
+    .on('end', () => {
+      logger.info('sayHelloStream: End');
+    })
+    .on('error', (err: Error) => {
+      logger.error('sayHelloStream:', err);
+    });
 
   for (let i = 1; i <= 10; i += 1) {
     stream.write({
