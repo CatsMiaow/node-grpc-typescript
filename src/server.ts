@@ -23,8 +23,6 @@ server.bindAsync('0.0.0.0:50051', ServerCredentials.createInsecure(), (err: Erro
 
   // Change service health status
   health.setStatus('helloworld.Greeter', 'SERVING');
-
-  server.start();
 });
 
 export { server, health };
