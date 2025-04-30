@@ -4,7 +4,7 @@
   "description": "Node.js gRPC Structure for TypeScript Example",
   "main": "dist/server.js",
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -15,12 +15,12 @@
     "health": "node dist/health"
   },
   "dependencies": {
-    "@grpc/grpc-js": "^1.12.2",
+    "@grpc/grpc-js": "^1.13.3",
     "grpc-health-check": "^2.0.2",
     "source-map-support": "^0.5.21"
   },
   "devDependencies": {
-    "@types/node": "^20.17.6",
+    "@types/node": "^22.15.3",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
     "eslint": "^8.57.1",
@@ -28,12 +28,12 @@
     "eslint-config-airbnb-typescript": "^18.0.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-prettier": "^5.2.6",
     "eslint-plugin-sonarjs": "^0.25.1",
-    "grpc-tools": "^1.12.4",
+    "grpc-tools": "^1.13.0",
     "rimraf": "^6.0.1",
-    "ts-proto": "^2.3.0",
-    "typescript": "~5.5.4"
+    "ts-proto": "^2.7.0",
+    "typescript": "~5.8.3"
   },
   "repository": {
     "type": "git",
