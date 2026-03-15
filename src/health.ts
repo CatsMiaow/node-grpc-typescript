@@ -5,7 +5,7 @@ import { HealthClient, HealthCheckRequest, HealthCheckResponse, HealthCheckRespo
 import { logger } from './utils';
 
 const health = new HealthClient('localhost:50051', credentials.createInsecure());
-logger.info('gRPC:HealthClient', new Date().toLocaleString());
+logger.info('gRPC:HealthClient');
 
 let argv = 'helloworld.Greeter';
 if (process.argv.length >= 3) {

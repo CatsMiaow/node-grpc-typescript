@@ -19,7 +19,7 @@ server.bindAsync('0.0.0.0:50051', ServerCredentials.createInsecure(), (err: Erro
     throw err;
   }
 
-  logger.info(`gRPC:Server:${bindPort}`, new Date().toLocaleString());
+  logger.info(`gRPC:Server:${bindPort}`);
 
   // Change service health status
   health.setStatus('helloworld.Greeter', 'SERVING');
