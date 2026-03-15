@@ -7,33 +7,30 @@
     "node": ">=22"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint --ext .ts .",
+    "lint": "eslint",
     "build": "node bin/proto && rimraf dist && tsc -b",
     "start": "node dist/server",
     "client": "node dist/client",
     "health": "node dist/health"
   },
   "dependencies": {
-    "@grpc/grpc-js": "^1.13.3",
-    "grpc-health-check": "^2.0.2",
+    "@grpc/grpc-js": "^1.14.3",
+    "consola": "3.4.2",
+    "grpc-health-check": "^2.1.0",
     "source-map-support": "^0.5.21"
   },
   "devDependencies": {
-    "@types/node": "^22.15.3",
-    "@typescript-eslint/eslint-plugin": "^7.18.0",
-    "@typescript-eslint/parser": "^7.18.0",
-    "eslint": "^8.57.1",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-airbnb-typescript": "^18.0.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-prettier": "^5.2.6",
-    "eslint-plugin-sonarjs": "^0.25.1",
-    "grpc-tools": "^1.13.0",
-    "rimraf": "^6.0.1",
-    "ts-proto": "^2.7.0",
-    "typescript": "~5.8.3"
+    "@types/node": "^22.19.15",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-sonarjs": "^4.0.2",
+    "grpc-tools": "^1.13.1",
+    "rimraf": "^6.1.3",
+    "ts-proto": "^2.11.5",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.57.0"
   },
   "repository": {
     "type": "git",
