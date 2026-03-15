@@ -9,15 +9,14 @@
   "scripts": {
     "lint": "eslint",
     "build": "node bin/proto && rimraf dist && tsc -b",
-    "start": "node dist/server",
-    "client": "node dist/client",
-    "health": "node dist/health"
+    "start": "node --enable-source-maps dist/server",
+    "client": "node --enable-source-maps dist/client",
+    "health": "node --enable-source-maps dist/health"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.14.3",
     "consola": "3.4.2",
-    "grpc-health-check": "^2.1.0",
-    "source-map-support": "^0.5.21"
+    "grpc-health-check": "^2.1.0"
   },
   "devDependencies": {
     "@types/node": "^22.19.15",

@@ -1,4 +1,3 @@
-import 'source-map-support/register';
 import { credentials, ServiceError } from '@grpc/grpc-js';
 
 import { HealthClient, HealthCheckRequest, HealthCheckResponse, HealthCheckResponse_ServingStatus } from './models/health';

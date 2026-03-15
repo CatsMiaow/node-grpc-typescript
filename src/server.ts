@@ -1,4 +1,3 @@
-import 'source-map-support/register';
 import { Server, ServerCredentials } from '@grpc/grpc-js';
 
 import { Greeter, GreeterService } from './services/Greeter';
@@ -19,10 +18,8 @@ server.bindAsync('0.0.0.0:50051', ServerCredentials.createInsecure(), (err: Erro
     throw err;
   }
 
-  logger.info(`gRPC:Server:${bindPort}`);
+  logger.info(`gRPC:Server:${String(bindPort).trim()}`);
 
   // Change service health status
   health.setStatus('helloworld.Greeter', 'SERVING');
 });
-
-export { server, health };

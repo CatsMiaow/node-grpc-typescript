@@ -1,4 +1,3 @@
-import 'source-map-support/register';
 import { credentials, Metadata, ServiceError } from '@grpc/grpc-js';
 
 import { clientService } from './client.service';
